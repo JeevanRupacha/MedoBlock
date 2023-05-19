@@ -8,6 +8,7 @@ import manufacturer from "../images/manufacturer.svg";
 import customer from "../images/customer.svg";
 import distributor from "../images/distributor.svg";
 import carrier from "../images/carrier.svg";
+import AccountCard from "../AccountCard";
 
 const HomePage = () => {
   useEffect(() => {
@@ -34,6 +35,23 @@ const HomePage = () => {
       }
     }
   };
+
+  const supplierDesc = "Manage suppliers and their information, track deliveries, and"
+                        + "collaborate seamlessly to ensure a reliable supply chain.";
+  
+  const manufacturerDesc = "Streamline production processes, monitor inventory levels,"
+                            + "and ensure compliance with industry regulations.";
+
+  const carrierDesc = "Efficiently manage logistics, track shipments, and optimize" +
+                          "delivery routes to ensure timely and safe transportation of" +
+                          "products.";
+
+  const distributorDesc = "Manage distribution networks, track shipments, and optimize" 
+                        +"inventory to ensure timely delivery to customers.";    
+                        
+  const customerDesc = "Track order status, receive notifications, and access product" +
+                        "information easily through our user-friendly customer portal.";                      
+
 
   return (
     <div className="bg-neutral-950 min-h-screen">
@@ -80,80 +98,14 @@ const HomePage = () => {
       </main>
 
       {/* card */}
-
       <div className="max-w-7xl mx-auto pt-36 sm:px-0 lg:px-0">
         <div className=" sm:px-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-            <div className="bg-neutral-900 shadow rounded-3xl p-6 cursor-pointer">
-              <div className="flex items-center justify-center h-24">
-                <img className="h-16 w-auto" src={supplier} alt="Supplier" />
-              </div>
-              <h3 className="text-xl font-semibold my-4 text-center text-white hover:text-green-500">
-                Supplier
-              </h3>
-              <p className="text-gray-300 text-clip overflow-hidden text-justify">
-                Manage suppliers and their information, track deliveries, and
-                collaborate seamlessly to ensure a reliable supply chain.
-              </p>
-            </div>
-            <div className="bg-neutral-900 shadow rounded-3xl p-6 cursor-pointer">
-              <div className="flex items-center justify-center h-24">
-                <img
-                  className="h-16 w-auto"
-                  src={manufacturer}
-                  alt="Manufacturer"
-                />
-              </div>
-              <h3 className="text-xl font-semibold my-4 text-center text-white hover:text-green-500">
-                Manufacturer
-              </h3>
-              <p className="text-gray-300 text-clip overflow-hidden text-justify">
-                Streamline production processes, monitor inventory levels, and
-                ensure compliance with industry regulations.
-              </p>
-            </div>
-            <div className="bg-neutral-900 shadow rounded-3xl p-6 cursor-pointer">
-              <div className="flex items-center justify-center h-24">
-                <img className="h-16 w-auto" src={carrier} alt="Carrier" />
-              </div>
-              <h3 className="text-xl font-semibold my-4 text-center text-white hover:text-green-500">
-                Carrier
-              </h3>
-              <p className="text-gray-300 text-clip overflow-hidden text-justify">
-                Efficiently manage logistics, track shipments, and optimize
-                delivery routes to ensure timely and safe transportation of
-                products.
-              </p>
-            </div>
-
-            <div className="bg-neutral-900 shadow rounded-3xl p-6 cursor-pointer  ">
-              <div className="flex items-center justify-center h-24">
-                <img
-                  className="h-16 w-auto"
-                  src={distributor}
-                  alt="Distributor"
-                />
-              </div>
-              <h3 className="text-xl font-semibold my-4 text-center text-white hover:text-green-500 ">
-                Distributor
-              </h3>
-              <p className="text-gray-300 text-clip overflow-hidden text-justify">
-                Manage distribution networks, track shipments, and optimize
-                inventory to ensure timely delivery to customers.
-              </p>
-            </div>
-            <div className="bg-neutral-900 shadow rounded-3xl p-6 cursor-pointer  ">
-              <div className="flex items-center justify-center h-24">
-                <img className="h-16 w-auto" src={customer} alt="Customer" />
-              </div>
-              <h3 className="text-xl font-semibold my-4 text-center text-white hover:text-green-500">
-                Customer
-              </h3>
-              <p className="text-gray-300 text-clip overflow-hidden text-justify ">
-                Track order status, receive notifications, and access product
-                information easily through our user-friendly customer portal.
-              </p>
-            </div>
+            <AccountCard description={supplierDesc} imageScr={supplier} title ={"Supplier"}/>
+            <AccountCard description={manufacturerDesc} imageScr={manufacturer} title ={"Manufacturer"}/>
+            <AccountCard description={carrierDesc} imageScr={carrier} title ={"Carrier"}/>
+            <AccountCard description={distributorDesc} imageScr={distributor} title ={"Distributor"}/>
+            <AccountCard description={customerDesc} imageScr={customer} title ={"Customer"}/>
           </div>
         </div>
       </div>

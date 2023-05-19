@@ -4,9 +4,8 @@ import HomePage from './components/pages/Home.jsx';
 function App() {
   return (
     <div>
-    <Navbar />
-  
-    <HomePage />
+      <Navbar />
+      <HomePage />
     </div>
   );
 }
