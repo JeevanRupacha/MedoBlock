@@ -7,45 +7,27 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
       extend: {
-        padding: {
-          btnNormalX: '2rem',
-          btnNormalY: '0.75rem',
-          btnMediumX: '1.6rem',
-          btnSmallX: '1rem',
-          btnSmallY: '0.5rem',
+        colors:{
+          'supply-black':'#2C2C2C',
+          'card-color':'#343434',
+          'wallet-msg':'#1C1F26',
+          'text-color':'#FFFFFF',
+          'blue':'#0044CC',
+          'button':'#00E472',
+          'line':'#D9D9D9',
+          'homecard':'#3A3A3A',
+          'form':'#32F694',
+          'formtext':'#CCCCCC',
         },
-        borderWidth: {
-          1: '1rem',
-          3: '3px',
+        fontFamily:{
+          sans:['Quicksand','sans-serif'],
         },
-        borderRadius: {
-          buttonRadius: '1.875rem',
-        },
-        colors: {
-          yellow: {
-            primary: '#FFA800',
-          },
-          black: {
-            primary: '#333333',
-            secondary: '#808080',
-            dark: '#000',
-          },
-          gray: {
-            borderGray: '#EAEAEA',
-            bgGray2: '#F8F8F8',
-            primary: '#F2F2F2',
-            secondary: '#DDDDDD',
-            tertiary: '#AAAAAA',
-          },
-          color1: {
-            green1: '#27AE61',
-            blueText: '#2975AA',
-            skyBlue: '#4184B2',
-            orange1: '#FFA800',
-          },
+       
+         
+        
+         
         },
       },
-    },
   
     plugins: [],
   };

@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import video from "../images/video.mp4";
-import supplier from "../images/supplier.svg";
-import manufacturer from "../images/manufacturer.svg";
-import customer from "../images/customer.svg";
-import distributor from "../images/distributor.svg";
-import carrier from "../images/carrier.svg";
-import AccountCard from "../AccountCard";
+
+import AccountCard from '../AccountCard';
 
 const HomePage = () => {
   useEffect(() => {
@@ -54,7 +49,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="bg-neutral-950 min-h-screen">
+    <div className="bg-supply-black min-h-screen">
       <div className="pt-36">
         {/* header section */}
         
@@ -67,7 +62,7 @@ const HomePage = () => {
                   <span className="text-green-500">Supply Chain</span> Using
                   Blockchain
                 </h1>
-                <div className="my-5 text-sm text-gray-600">
+                <div className="my-5 text-sm text-gray-600 font-sans">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Voluptates delectus cupiditate perferendis voluptatibus
                   consequuntur quaerat nulla laudantium sunt dolores in.
@@ -77,18 +72,18 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="col-span-12 md:col-span-6">
-                <video className="mx-auto w-56 md:w-96" controls src={video} />
+                <video className="mx-auto w-56 md:w-96" controls src="images/video.mp4" />
               </div>
             </div>
           </div>
         </header>
       </div>
-      <main className="max-w-7xl mx-auto pt-36 sm:px-0 lg:px-0">
-        <div className="sm:px-0">
-          <h2 className="text-2xl font-semibold mb-4 text-white">
+      <main className="max-w-7xl mx-auto pt-36 sm:px-0 lg:px-0" >
+        <div className="sm:px-0" data-aos="fade-up">
+          <h2 className="text-2xl font-semibold mb-4 text-text-color font-sans">
             Welcome to Our Platform
           </h2>
-          <p className="text-gray-300 text-clip overflow-hidden text-justify mb-8">
+          <p className="text-gray-300 text-clip overflow-hidden text-justify mb-8 font-sans">
             We provide end-to-end solutions for pharmaceutical supply chain
             management. Our platform ensures efficient tracking and delivery of
             pharmaceutical products from suppliers to manufacturers,
@@ -98,14 +93,14 @@ const HomePage = () => {
       </main>
 
       {/* card */}
-      <div className="max-w-7xl mx-auto pt-36 sm:px-0 lg:px-0">
+      <div className="max-w-7xl mx-auto pt-36 sm:px-0 lg:px-0" >
         <div className=" sm:px-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-            <AccountCard description={supplierDesc} imageScr={supplier} title ={"Supplier"}/>
-            <AccountCard description={manufacturerDesc} imageScr={manufacturer} title ={"Manufacturer"}/>
-            <AccountCard description={carrierDesc} imageScr={carrier} title ={"Carrier"}/>
-            <AccountCard description={distributorDesc} imageScr={distributor} title ={"Distributor"}/>
-            <AccountCard description={customerDesc} imageScr={customer} title ={"Customer"}/>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6" data-aos="fade-up" >
+            <AccountCard description={supplierDesc} imageScr="images/supplier.svg" title ={"Supplier"}/>
+            <AccountCard description={manufacturerDesc} imageScr="images/manufacturer.svg" title ={"Manufacturer"}/>
+            <AccountCard description={carrierDesc} imageScr="images/carrier.svg" title ={"Carrier"}/>
+            <AccountCard description={distributorDesc} imageScr="images/distributor.svg" title ={"Distributor"}/>
+            <AccountCard description={customerDesc} imageScr="images/customer.svg" title ={"Customer"}/>
           </div>
         </div>
       </div>
@@ -113,19 +108,19 @@ const HomePage = () => {
 
       {/* we offer section */}
 
-      <section className="max-w-7xl mx-auto pt-36 sm:px-4 md:px-6 lg:px-8 xl:px-0">
+      <section className="max-w-7xl mx-auto pt-36 sm:px-4 md:px-0 lg:px-8 xl:px-0">
         <div className="sm:px-4">
           <div
-            className="mb-2 border-l-2 border-green-200 pl-3 text-sm font-medium text-white"
+            className="mb-2 border-l-2 border-green-200 pl-3 text-sm font-medium text-text-color"
             data-aos="fade-up"
           >
             WHAT WE OFFER
           </div>
           <div className="max-w-screen-md" data-aos="fade-up">
-            <h3 className="text-2xl font-bold md:text-3xl lg:text-5xl text-white">
+            <h3 className="text-2xl font-bold md:text-3xl lg:text-5xl text-text-color font-sans">
               Our Supply Chain Offers
             </h3>
-            <p className="mt-4 text-sm text-gray-300">
+            <p className="mt-4 text-sm text-text-color font-sans">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi
               modi quo, laborum beatae voluptate saepe reprehenderit, itaque
               nostrum veniam quas, voluptatum sit perspiciatis repellendus
@@ -176,21 +171,21 @@ const HomePage = () => {
                   <h4 className="text-2xl text-green-600">
                     <strong>Supplier</strong>
                   </h4>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
@@ -202,21 +197,21 @@ const HomePage = () => {
                   <h4 className="text-2xl text-green-600">
                     <strong>Carrier</strong>
                   </h4>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
@@ -225,24 +220,24 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div data-id="3" className="tab-body hidden">
-                  <h4 className="text-2xl text-green-600">
+                  <h4 className="text-2xl text-green-600 font-sans">
                     <strong>Manufacturer</strong>
                   </h4>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans ">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
@@ -254,21 +249,21 @@ const HomePage = () => {
                   <h4 className="text-2xl text-green-600">
                     <strong>Distributor</strong>
                   </h4>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
@@ -280,21 +275,21 @@ const HomePage = () => {
                   <h4 className="text-2xl text-green-600">
                     <strong>Customer</strong>
                   </h4>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
                     officiis placeat porro minima aliquid asperiores reiciendis
                     provident.
                   </p>
-                  <p className="mt-2 text-sm text-gray-300">
+                  <p className="mt-2 text-sm text-text-color font-sans">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Consectetur obcaecati consequuntur quas incidunt ratione
                     minus, ut officiis hic exercitationem. Eos itaque quas
@@ -310,9 +305,9 @@ const HomePage = () => {
 
 {/* .........> */}
 
-      <footer className="bg-stone-950 pt-36">
+      <footer className="bg-supply-black pt-36">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-300">
+          <div className="text-center text-text-color font-sans">
             © 2023 Pharmaceutical Supply Chain. All rights reserved.
           </div>
         </div>
