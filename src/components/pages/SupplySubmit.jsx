@@ -41,7 +41,7 @@ const SupplySubmit = () => {
               </label>
               <div className="flex ">
                 <input
-                  className="border-2 border-form rounded-md px-3 py-6 bg-supply-black h-8 w-[550px]  flex-grow"
+                  className="border-2 border-form rounded-md px-3 py-6 bg-supply-black h-8 w-[550px] flex-grow"
                   placeholder="Enter what unit eg:KG..."
                 />
               </div>
@@ -91,43 +91,37 @@ const SupplySubmit = () => {
               </div>
             </div>
 
-       
-
             <div className="flex items-start">
-  <label
-    htmlFor="From"
-    className="text font-medium mb-2 mr-20 text-text-color px-3 "
-  >
-    From
-  </label>
-  <input
-    className="underline text-blue border-none bg-transparent "
-    value="abcdefghijkllsjd"
-  />
-</div>
+              <label
+                htmlFor="From"
+                className="text font-medium mb-2 mr-20 text-text-color px-3 "
+              >
+                From
+              </label>
+              <input
+                className="underline text-blue border-none bg-transparent "
+                value="abcdefghijkllsjd"
+              />
+            </div>
 
+            <div className="flex items-start mb-8">
+              <label
+                htmlFor="productId"
+                className="text font-medium  mr-10 text-text-color px-3 "
+              >
+                Product Id
+              </label>
+              <input
+                className="underline text-text-color border-none bg-transparent ml-1"
+                value="abcdefghijklmnop"
+              />
+            </div>
 
-<div className="flex items-start mb-8">
-  <label
-    htmlFor="productId"
-    className="text font-medium  mr-10 text-text-color px-3 "
-  >
-    Product Id
-  </label>
-  <input
-    className="underline text-text-color border-none bg-transparent ml-1"
-    value="abcdefghijklmnop"
-  />
-</div>
-
-
-<div className="flex items-start ">
-<button className="mt-4 bg-button hover:bg-green-700 text-black font-semibold py-1 px-4 rounded-md h-10 w-[300px] mb-8 ml-2">
-    Submit
-  </button>
-
-</div>
-
+            <div className="flex items-start ">
+              <button className="mt-4 bg-button hover:bg-green-700 text-black font-semibold py-1 px-4 rounded-md h-10 w-[300px] mb-8 ml-2">
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>

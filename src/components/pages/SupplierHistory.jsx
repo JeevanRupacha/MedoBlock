@@ -55,7 +55,7 @@ const SupplierHistory = () => {
         />
         
 <div className="pt-36" >
-<div className="grid grid-cols-1 sm:grid-cols-1 rounded-md bg-wallet-msg items-center justify-center w-max ">
+<div className="grid grid-cols-1 sm:grid-cols-1 rounded-md bg-wallet-msg items-center justify-center w-max h-10">
   <div className="text-center sm:text-right">
     <div className="flex items-center">
       <p className="text-sm font-semibold text-text-color ml-4">
