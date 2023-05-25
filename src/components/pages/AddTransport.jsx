@@ -1,6 +1,6 @@
-import React from 'react';
-import TransportCard from '../TransportCard';
-import Nav from '../Nav';
+import React from "react";
+import TransportCard from "../TransportCard";
+import Nav from "../Nav";
 
 const AddTransport = () => {
   const currentDate = new Date().toDateString();
@@ -63,24 +63,31 @@ const AddTransport = () => {
       <div className="max-w-7xl mx-auto sm:px-2 lg:px-2">
         <Nav
           Leftimagescr="images/navimg.svg"
-          Button={<button className="rounded-8px text-sm font-medium h-8 w-24 ml-4 bg-black-primary ">Click Me</button>}
+          Button={
+            <button className="rounded-8px text-sm font-medium h-8 w-24 ml-4 bg-black-primary ">
+              Click Me
+            </button>
+          }
           Rightimagescr="images/logout.svg"
         />
       </div>
 
       <div className="pt-16 sm:pt-24 md:pt-36 flex flex-col items-center justify-center">
-        <img className="h-24 sm:h-32 w-auto" src="images/carrier.svg" alt="transporter" />
+        <img
+          className="h-24 sm:h-32 w-auto"
+          src="images/carrier.svg"
+          alt="transporter"
+        />
         <button className="mt-4 bg-button hover:bg-green-700 text-black font-semibold py-1 px-4 rounded-md">
           Add Supply
         </button>
       </div>
-      
-<div className="pt-20 flex justify-center pb-20">
-  <div className="text-text-color font-semibold w-max mt-2 border-b-2 border-line text-xl text-center ">
-            <p> Previous Supply History </p>
-  </div>
-</div>
 
+      <div className="pt-20 flex justify-center pb-20">
+        <div className="text-text-color font-semibold w-max mt-2 border-b-2 border-line text-xl text-center ">
+          <p> Previous Supply History </p>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6 mx-2 md:mx-4 lg:mx-6 xl:mx-8">
         <TransportCard

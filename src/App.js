@@ -1,4 +1,7 @@
 import React from "react";
+// import FDAApproved from "./components/pages/FDAApproved";
+// import FDARequest from "./components/pages/FDARequest";
+import AddManu from "./components/pages/AddManu";
 // import SupplySubmit from "./components/pages/SupplySubmit";
 // import AddSupply from "./components/pages/AddSupply";
 // import Navbar from './components/pages/Navbar.jsx';
@@ -16,7 +19,10 @@ function App() {
       {/* <AddSupply /> */}
       {/* < TransportHistory /> */}
       {/* <AddTransport /> */}
-?    </div>
+      {/* <FDAApproved /> */}
+      {/* <FDARequest /> */}
+      < AddManu />
+   </div>
   );
 }
 
