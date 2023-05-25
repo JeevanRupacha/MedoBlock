@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import TopAppBar from '../shared/ui/topAppBar/TopAppBar'
 
 export default function Home() {
   return (
     <main className='min-h-screen bg-primary-black'>
       <div>
-        <p> Test </p>
+        <TopAppBar/>
       </div>
     </main>
   )
