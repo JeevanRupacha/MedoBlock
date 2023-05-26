@@ -10,6 +10,8 @@ const ManuCard = ({
   productId,
   button,
   FDArequested,
+  
+  
 }) => {
   return (
     <div className="bg-card-color shadow cursor-pointer rounded-2xl w-100 p-4">
@@ -29,6 +31,13 @@ const ManuCard = ({
         )}
       </div>
 
+
+  
+
+
+
+
+
       <div className="flex items-start justify-between mb-4">
         {FDArequested && (
           <div className="flex items-center">
@@ -44,6 +53,10 @@ const ManuCard = ({
           </div>
         )}
       </div>
+
+
+
+
 
       <div className="font-sans text-white ml-4 mb-4">
         <p className="text-md font-semibold  mt-2">{date}</p>
@@ -66,22 +79,42 @@ const ManuCard = ({
         </div>
       </div>
 
+      
+
       <div className="flex justify-between mt-2">
-        <div>
-          <p className="text-sm text-blue">From: {from}</p>
-          <p className="text-sm text-blue">To: {to}</p>
-          <p className="text-sm text-blue">ProductId: {productId}</p>
-        </div>
+  <div>
+    <p className="text-sm text-text-color">
+      <span className="font-sans mr-2 ml-4">From:</span>{" "}
+      <span className="underline text-blue">{from}</span>
+    </p>
+    <p className="text-sm text-text-color">
+      <span className="font-sans mr-6 ml-4">To:</span>{" "}
+      <span className="underline text-blue">{to}</span>
+    </p>
+    <p className="text-sm text-text-color">
+      <span className="font-sans mr-2 ml-2">ProductId:</span>{" "}
+      <span className="underline text-blue">{productId}</span>
+    </p>
+  </div>
+</div>
+
+
+<div className="flex items-center justify-center">
+  {FDArequested && (
+    <button className="mt-4 border border-button hover:bg-green-700 text-text-color font-semibold py-1 px-10 rounded-full text-center ">
+      {button}
+    </button>
+  )}
+</div>
+
+
+
+
+
+
+    
       </div>
 
-      <div className="flex justify-center mt-2">
-        <div className="mx-auto">
-          <button className="flex items-center justify-between border border-radius-md border-green-700 hover:bg-green-700 text-text-color font-semibold py-1 px-10 rounded-full text-center mt-4">
-            {button}
-          </button>
-        </div>
-      </div>
-    </div>
   );
 };
 

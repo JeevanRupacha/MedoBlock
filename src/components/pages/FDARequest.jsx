@@ -103,6 +103,7 @@ const FDARequest = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 ml-4  sm:ml-4 lg:ml-4  mt-20">
+          
           <ManuCard
             FDArequested={FDArequested1}
             date={date1}
@@ -112,7 +113,8 @@ const FDARequest = () => {
             totalUnit={totalUnit1}
             price={price1}
             name={name1}
-            button={button}
+            
+          button={button}
           />
           <ManuCard
             FDArequested={FDArequested2}
@@ -170,6 +172,7 @@ const FDARequest = () => {
             button={button}
           />
         </div>
+      
         <footer className="bg-supply-black pt-16 sm:pt-24 md:pt-36">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-text-color">

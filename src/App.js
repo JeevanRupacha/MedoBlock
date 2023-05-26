@@ -1,7 +1,8 @@
 import React from "react";
+import AddDistributer from "./components/pages/AddDistributer";
 // import FDAApproved from "./components/pages/FDAApproved";
 // import FDARequest from "./components/pages/FDARequest";
-import AddManu from "./components/pages/AddManu";
+// import AddManu from "./components/pages/AddManu";
 // import SupplySubmit from "./components/pages/SupplySubmit";
 // import AddSupply from "./components/pages/AddSupply";
 // import Navbar from './components/pages/Navbar.jsx';
@@ -9,6 +10,8 @@ import AddManu from "./components/pages/AddManu";
 // import SupplierHistory  from './components/pages/SupplierHistory.jsx';
 // import TransportHistory from "./components/pages/TransportHistory";
 // import AddTransport from "./components/pages/AddTransport";
+// import Admin from "./components/pages/Admin";
+// import DistributerHistory from "./components/pages/DistributerHistory";
 function App() {
   return (
     <div>
@@ -21,7 +24,10 @@ function App() {
       {/* <AddTransport /> */}
       {/* <FDAApproved /> */}
       {/* <FDARequest /> */}
-      < AddManu />
+      {/* < AddManu /> */}
+      {/* <Admin /> */}
+      {/* < DistributerHistory /> */}
+      <AddDistributer />
    </div>
   );
 }

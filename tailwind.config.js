@@ -18,6 +18,7 @@ module.exports = {
           'homecard':'#3A3A3A',
           'form':'#32F694',
           'formtext':'#CCCCCC',
+          'red':'#FB3232',
         },
         fontFamily:{
           sans:['Quicksand','sans-serif'],
