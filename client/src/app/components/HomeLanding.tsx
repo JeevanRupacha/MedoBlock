@@ -3,10 +3,9 @@
 import React, {useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Strings from '../../shared/utils/Strings'
+import Strings from '../../shared/utils/Strings';
 import AccountCard from "./AccountCard"; 
 import Spacer from "@/shared/ui/components/Spacer";
-
 
 const HomeLanding = () => {
   useEffect(() => {
