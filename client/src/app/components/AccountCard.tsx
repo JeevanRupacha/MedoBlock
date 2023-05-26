@@ -8,8 +8,8 @@ interface AccountCardProps{
 
 const AccountCard = ({ description, title, imageSrc }: AccountCardProps) => {
   return (
-    <div className="bg-homecard border-2 border-transparent shadow rounded-3xl cursor-pointer pt-4 
-      hover:border-2 hover:border-red-400/50 hover:drop-shadow-md"
+    <div className="bg-homecard border-2 w-96 border-transparent shadow rounded-3xl cursor-pointer pt-4 
+      hover:border-2 hover:border-red-400/30 hover:drop-shadow-md"
     >
       <div className="flex items-center justify-center h-24">
         <img className="h-16 w-auto" src={imageSrc} alt="Supplier" />

@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect } from "react";
+import React, {MouseEventHandler, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Strings from '../../shared/utils/Strings';
@@ -12,27 +12,12 @@ const HomeLanding = () => {
     AOS.init();
   }, []);
 
-  const removeTabClass = (event: React.MouseEventHandler<HTMLButtonElement>) => {
-    // const selectedTab = event.target.getAttribute("data-ref");
-    // const tabBodies = document.getElementsByClassName("tab-body");
-    // const tabButtons = document.getElementsByClassName("tab-btn");
+  const [selectedTab, setSelectedTab] = useState("supplier")
 
-    // for (let i = 0; i < tabBodies.length; i++) {
-    //   const tabBody = tabBodies[i];
-    //   const tabButton = tabButtons[i];
-
-    //   if (tabBody.getAttribute("data-id") === selectedTab) {
-    //     tabBody.classList.remove("hidden");
-    //     tabButton.classList.add("text-white");
-    //     tabButton.classList.remove("text-green-600");
-    //   } else {
-    //     tabBody.classList.add("hidden");
-    //     tabButton.classList.remove("text-white");
-    //     tabButton.classList.add("text-green-600");
-    //   }
-    // }
-  };
-
+  const onClickTab = (tab: string) => {
+    setSelectedTab(tab)
+    console.log(selectedTab)
+  }
 
   const supplierDesc = "Manage suppliers and their information, track deliveries, and"
                         + "collaborate seamlessly to ensure a reliable supply chain.";
@@ -103,12 +88,14 @@ const HomeLanding = () => {
       {/* card */}
       
       <div className="max-w-7xl mx-auto pt-32 sm:px-0 lg:px-0" >
-        <div className="grid grid-cols-3 gap-6 justify-center" data-aos="fade-up" >
+        <div className="flex justify-center gap-6" data-aos="fade-up">
             <AccountCard description={supplierDesc} imageSrc="supplier.svg" title ={"Supplier"}/>
             <AccountCard description={manufacturerDesc} imageSrc="manufacturer.svg" title ={"Manufacturer"}/>
             <AccountCard description={carrierDesc} imageSrc="carrier.svg" title ={"Carrier"}/>
-            <AccountCard description={distributorDesc} imageSrc="distributor.svg" title ={"Distributor"}/>
-            <AccountCard description={customerDesc} imageSrc="customer.svg" title ={"Customer"}/>
+        </div>
+        <div className="flex justify-center gap-6 pt-6" data-aos="fade-up"> 
+          <AccountCard description={distributorDesc} imageSrc="distributor.svg" title ={"Distributor"}/>
+          <AccountCard description={customerDesc} imageSrc="customer.svg" title ={"Customer"}/>
         </div>
       </div>
       {/* .......end of card */}
@@ -139,35 +126,33 @@ const HomeLanding = () => {
               <div className="md:mr-4 md:w-full md:max-w-xs">
                 <button
                   data-ref="1"
-                  //onClick={removeTabClass}
-                  className="tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
+                  onClick= {() => onClickTab("supplier")}
+                  className={`tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
                   Supplier
                 </button>
                 <button
                   data-ref="2"
-                  //onClick={removeTabClass}
+                  onClick= {() => onClickTab("carrier")}
                   className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
                 >
                   Carrier
                 </button>
                 <button
-                  data-ref="3"
-                  //onClick={removeTabClass}
+                  onClick= {() => onClickTab("manufacturer")}
                   className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
                 >
                   Manufacturer
                 </button>
                 <button
                   data-ref="4"
-                  //onClick={removeTabClass}
+                  onClick= {() => onClickTab("disctributor")}
                   className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
                 >
                   Distributor
                 </button>
                 <button
-                  data-ref="5"
-                  //onClick={removeTabClass}
+                  onClick= {() => onClickTab("customer")}
                   className="tab-btn text-md pt-1 mt-0 ml-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
                 >
                   Customer
@@ -310,15 +295,17 @@ const HomeLanding = () => {
         </div>
       </div>
 
-{/* .........> */}
+      {/* .........> */}
 
-      <footer className="bg-supply-black pt-36">
+      <div className="pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-text-color">
             © 2023 Pharmaceutical Supply Chain. All rights reserved.
           </div>
         </div>
-      </footer>
+      </div>
+
+      <div className="pt-16"></div>
     </div>
   );
 };
