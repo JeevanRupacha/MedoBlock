@@ -1,9 +1,8 @@
 "use client";
 
-import React, {MouseEventHandler, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Strings from '../../shared/utils/Strings';
 import AccountCard from "./AccountCard"; 
 import Spacer from "@/shared/ui/components/Spacer";
 
@@ -41,7 +40,7 @@ const HomeLanding = () => {
       <div className="pt-36">
         {/* header section */}
         
-        <div className="mx-auto max-w-7xl bg-gradient-to-br from-blue-100 via-purple-200 to-green-100 xl:rounded-3xl" data-aos="fade-up">
+        <div className="mx-auto bg-gradient-to-br from-blue-100 via-purple-200 to-green-100 xl:rounded-3xl" data-aos="fade-up">
           <div>
             <div className="grid grid-cols-12 items-start gap-y-8 md:gap-8">
               <div className="col-span-12 text-center md:col-span-6 md:text-left">
@@ -69,7 +68,7 @@ const HomeLanding = () => {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto pt-32 sm:px-0 lg:px-0" >
+      <main className="mx-auto pt-32 sm:px-0 lg:px-0" >
         <div className="sm:px-0" data-aos="fade-up">
           <h2 className="text-2xl font-semibold mb-4 text-text-color">
             Welcome to Our Platform
@@ -87,7 +86,7 @@ const HomeLanding = () => {
     
       {/* card */}
       
-      <div className="max-w-7xl mx-auto pt-32 sm:px-0 lg:px-0" >
+      <div className="mx-auto pt-32 sm:px-0 lg:px-0" >
         <div className="flex justify-center gap-6" data-aos="fade-up">
             <AccountCard description={supplierDesc} imageSrc="supplier.svg" title ={"Supplier"}/>
             <AccountCard description={manufacturerDesc} imageSrc="manufacturer.svg" title ={"Manufacturer"}/>
@@ -102,7 +101,7 @@ const HomeLanding = () => {
 
       {/* we offer section */}
 
-      <div className="max-w-7xl mx-auto pt-32 sm:px-0 lg:px-0" >
+      <div className="mx-auto pt-32 sm:px-0 lg:px-0" >
         <div className="sm:px-4">
           <div
             className="mb-2 border-l-2 border-green-200 pl-3 text-sm font-medium text-onSecondary-dark"

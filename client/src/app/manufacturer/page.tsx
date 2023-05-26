@@ -1,14 +1,11 @@
 import TopAppBar from "@/shared/ui/topAppBar/TopAppBar"
+import Manufacturer from "./components/Manufacturer";
 
 const Home = () => {
     return (
       <main className='min-h-screen'>
-        <div>
-          <TopAppBar/>
-
-
-          <p className="text-onPrimary-dark">Manufacturer</p>
-        </div>
+        <TopAppBar/>
+        <Manufacturer/>
       </main>
     )
   }
