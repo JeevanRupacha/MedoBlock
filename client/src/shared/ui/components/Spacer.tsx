@@ -5,8 +5,7 @@ interface SpacerProps{
 
 const Spacer = ({height = 0, width = 0}: SpacerProps) => {
     return(
-        <div className={`px-${width} py-${height}`}></div>
-        // <div className="py-10"></div>
+        <div className={`w-${width} h-${height}`}></div>
     )
 }
 

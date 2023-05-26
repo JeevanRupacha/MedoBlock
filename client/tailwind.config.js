@@ -15,7 +15,11 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors:{
-        'primary-black':'#2C2C2C',
+        'primary-dark':'#2C2C2C',
+        'onPrimary-dark':'#FFFFFF',
+        'onSecondary-dark':'#DCDCDC',
+        'primary-light':'#FFFFFF',
+        'onPrimary-light':'#3A3A3A',
         'card-color':'#343434',
         'wallet-msg':'#1C1F26',
         'text-color':'#FFFFFF',
