@@ -20,7 +20,7 @@ module.exports = {
         'onSecondary-dark':'#DCDCDC',
         'primary-light':'#FFFFFF',
         'onPrimary-light':'#3A3A3A',
-        'card-color':'#343434',
+        'card-color':"#343434",
         'wallet-msg':'#1C1F26',
         'text-color':'#FFFFFF',
         'blue':'#0044CC',
@@ -29,6 +29,7 @@ module.exports = {
         'homecard':'#3A3A3A',
         'form':'#32F694',
         'formtext':'#CCCCCC',
+        'green1': '#00E472'
       }
     },
   },

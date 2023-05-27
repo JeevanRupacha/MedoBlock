@@ -17,8 +17,8 @@ const AccountCard = ({ description, title, imageSrc }: AccountCardProps) => {
       <h3 className="text-xl font-semibold my-4 text-center text-text-color hover:text-green-500">
         {title}
       </h3>
-      <div className="px-2 pb-2 rounded-b-3xl bg-card-color">
-        <p className="text-onSecondary-dark pt-4 text-center text-clip overflow-hidden px-2 pb-4">
+      <div className="rounded-b-3xl h-28 bg-card-color">
+        <p className="text-onSecondary-dark pt-4 text-center text-clip overflow-hidden px-4 pb-8">
           {description}
         </p>
       </div>

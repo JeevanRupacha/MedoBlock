@@ -66,7 +66,11 @@ const Manufacturer = () => {
     
     return (
       <div>
-        <AddButton text="Add Medicine" onClick={() => {}}/>
+        <AddButton 
+          imageSrc={"manufacturer.svg"}
+          text="Add Medicine"
+          onClick={() => {}}
+        />
         <section>
             <div className="pt-20 flex cursor-pointer font-medium">
                 <div>

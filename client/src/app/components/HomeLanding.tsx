@@ -5,17 +5,36 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import AccountCard from "./AccountCard"; 
 import Spacer from "@/shared/ui/components/Spacer";
+import Strings from "@/shared/utils/Strings";
+import UserRole from "@/shared/models/UserRole.model";
 
 const HomeLanding = () => {
   useEffect(() => {
     AOS.init();
   }, []);
 
-  const [selectedTab, setSelectedTab] = useState("supplier")
+  const [selectedTab, setSelectedTab] = useState(UserRole.SUPPLIER)
+  const [selectedTabDesc, setSelectedTabDesc] = useState(Strings.SUPPLIER_DESC)
 
-  const onClickTab = (tab: string) => {
+  const onClickTab = (tab: UserRole) => {
     setSelectedTab(tab)
-    console.log(selectedTab)
+    switch(tab){
+      case UserRole.SUPPLIER: 
+        setSelectedTabDesc(Strings.SUPPLIER_DESC);
+        break;
+      case UserRole.MANUFACTURER: 
+        setSelectedTabDesc(Strings.MANUFACTURER_DESC);
+        break;
+      case UserRole.CARRIER: 
+        setSelectedTabDesc(Strings.TRANSPORTER_DESC);
+        break;
+      case UserRole.RETAILER:
+        setSelectedTabDesc(Strings.RETAILER_DESC);
+        break;
+      case UserRole.CUSTOMER:
+        setSelectedTabDesc(Strings.CUSTOMER_DESC);
+        break;
+    }
   }
 
   const supplierDesc = "Manage suppliers and their information, track deliveries, and"
@@ -125,167 +144,46 @@ const HomeLanding = () => {
               <div className="md:mr-4 md:w-full md:max-w-xs">
                 <button
                   data-ref="1"
-                  onClick= {() => onClickTab("supplier")}
-                  className={`tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
+                  onClick= {() => onClickTab(UserRole.SUPPLIER)}
+                  className={`${selectedTab == UserRole.SUPPLIER && "text-white"} tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
                   Supplier
                 </button>
                 <button
                   data-ref="2"
-                  onClick= {() => onClickTab("carrier")}
-                  className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
+                  onClick= {() => onClickTab(UserRole.CARRIER)}
+                  className={`${selectedTab == UserRole.CARRIER && "text-white"} tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
                   Carrier
                 </button>
                 <button
-                  onClick= {() => onClickTab("manufacturer")}
-                  className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
+                  onClick= {() => onClickTab(UserRole.MANUFACTURER)}
+                  className={`${selectedTab == UserRole.MANUFACTURER && "text-white"} tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
                   Manufacturer
                 </button>
                 <button
                   data-ref="4"
-                  onClick= {() => onClickTab("disctributor")}
-                  className="tab-btn text-md m-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
+                  onClick= {() => onClickTab(UserRole.RETAILER)}
+                  className={`${selectedTab == UserRole.RETAILER && "text-white"} tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
-                  Distributor
+                  Retailer
                 </button>
                 <button
-                  onClick= {() => onClickTab("customer")}
-                  className="tab-btn text-md pt-1 mt-0 ml-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full"
+                  onClick= {() => onClickTab(UserRole.CUSTOMER)}
+                  className={`${selectedTab == UserRole.CUSTOMER && "text-white"} tab-btn text-md mb-4 ml-0 mt-0 inline-block text-center md:text-right font-medium text-green-600 hover:text-white md:w-full`}
                 >
                   Customer
                 </button>
               </div>
+
               <div className="border-gray-200 md:border-l-2 md:px-4">
-                <div data-id="1" className="tab-body">
+                <div data-id="1" className="tab-body" data-aos="fade-up">
                   <h4 className="text-2xl text-start text-green-600">
-                    <strong>Supplier</strong>
+                    <strong>{Object.values(selectedTab)}</strong>
                   </h4>
                   <p className="mt-6 text-sm text-onSecondary-dark">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-onSecondary-dark">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-onSecondary-dark">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                </div>
-                <div data-id="2" className="tab-body hidden">
-                  <h4 className="text-2xl text-green-600">
-                    <strong>Carrier</strong>
-                  </h4>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                </div>
-                <div data-id="3" className="tab-body hidden">
-                  <h4 className="text-2xl text-green-600">
-                    <strong>Manufacturer</strong>
-                  </h4>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color ">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                </div>
-                <div data-id="4" className="tab-body hidden">
-                  <h4 className="text-2xl text-green-600">
-                    <strong>Distributor</strong>
-                  </h4>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                </div>
-                <div data-id="5" className="tab-body hidden">
-                  <h4 className="text-2xl text-green-600">
-                    <strong>Customer</strong>
-                  </h4>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
-                  </p>
-                  <p className="mt-2 text-sm text-text-color">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consectetur obcaecati consequuntur quas incidunt ratione
-                    minus, ut officiis hic exercitationem. Eos itaque quas
-                    officiis placeat porro minima aliquid asperiores reiciendis
-                    provident.
+                    {selectedTabDesc}
                   </p>
                 </div>
               </div>

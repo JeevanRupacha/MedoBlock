@@ -47,7 +47,7 @@ const SupplierMain = () => {
   const senderid6 = "axcf3bj343hsxcccn34nm";
   return (
     <div className="bg-supply-black min-h-screen">
-    <AddButton text="Add Supply" onClick={() => {}}/>
+    <AddButton imageSrc={"manufacturer.svg"} text="Add Supply" onClick={() => {}}/>
 
     <div className="pt-20 flex justify-center ">
         <div className="text-text-color font-semibold w-max mt-2 border-b-2 border-line text-xl text-center ">

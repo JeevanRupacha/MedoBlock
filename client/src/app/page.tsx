@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import TopAppBar from '../shared/ui/topAppBar/TopAppBar'
 import HomeLanding from './components/HomeLanding'
+import ChooseRole from '@/shared/ui/components/ChooseRole'
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <div>
         <TopAppBar/>
         <HomeLanding/>
+        <ChooseRole/>
       </div>
     </main>
   )
