@@ -5,7 +5,7 @@ export default function Home() {
     return (
       <main className='min-h-screen bg-primary-black'>
         <div>
-          <TopAppBar/>
+          {/* <TopAppBar/> */}
           <SupplierMain/>
         </div>
       </main>

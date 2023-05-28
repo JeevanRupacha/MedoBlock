@@ -16,7 +16,7 @@ const LogedInButton = ({
     return(
         <div className="flex content-center items-center">
             <img className="w-8 ml-4 mt-2 rounded-full" src={userImage} alt="img" />
-            <div className="bg-card-color mx-4 flex-row items-center rounded-lg px-4 py-1">
+            <div className="transition ease-in-out delay-150 bg-blue-500 hover:scale-110 bg-card-color mx-4 flex-row items-center rounded-lg px-4 py-1 duration-300">
                 <p className="flex justify-center text-onPrimary-dark font-bold">{name}</p>
                 <div className="flex justify-center pl-1">
                     <p className="text-onSecondary-dark justify-items-center opacity-40 text-xs">

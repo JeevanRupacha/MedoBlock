@@ -5,7 +5,7 @@ const FDAHome = () => {
     return (
       <main className='min-h-screen bg-primary-black'>
         <div>
-          <TopAppBar/>
+          {/* <TopAppBar/> */}
           <FdaAdminMain/>
         </div>
       </main>

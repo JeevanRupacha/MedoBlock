@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { collection, addDoc } from "firebase/firestore"; 
-
 import LoginButton from "../components/LoginButton";
 import LogedInButton from "../components/LogedInButton";
 import { auth, googleProvider, db } from "../../../config/firebase_conn";
@@ -12,16 +10,17 @@ import { IUser } from "@/shared/models/User.model";
 import UserRole from "@/shared/models/UserRole.model";
 import ChooseRole from "../components/ChooseRole";
 import { addUserRole, getUserRole} from "./apiHelper";
-import {doc, setDoc, getDoc} from "firebase/firestore"; 
-import Strings from "@/shared/utils/Strings";
 import IUserRoleData from "@/shared/models/UserRoleData.model";
 import getEnumKeyByValue from "@/shared/utils/getEnumByValue";
+import { useRouter } from 'next/navigation';
 
 const TopAppBar = () => {
     const [isUserLogedIn, setLogedIn] = useState(false) 
     const [user, setUser] = useState<IUser>()
     const [openChooseRole, setOpenChooseRole] = useState(false)
     const [roleFetchLoading, setRoleLoadig] = useState(false)
+
+    const { push } = useRouter()
 
     const onLogin = async () => {
       try{
@@ -57,8 +56,36 @@ const TopAppBar = () => {
         }
         const newUser = {...userArg, "role": role} as IUser
         setUser(newUser);
-        setRoleLoadig(false);
+        setRoleLoadig(false);  
     }
+
+    useEffect(() => {
+      switch(user?.role.toLowerCase()){
+        case UserRole.CARRIER.toLowerCase(): 
+          push('/transporter');
+          break;
+        case UserRole.FDA_ADMIN.toLowerCase():
+          push('/fdaAdmin');
+          break;
+        case UserRole.CUSTOMER.toLowerCase():
+          push('/customer');
+          break;
+        case UserRole.MANUFACTURER.toLowerCase():
+          push('/manufacturer');
+          break;
+        case UserRole.NONE.toLowerCase(): 
+          push('/');
+          break;
+        case UserRole.RETAILER.toLowerCase(): 
+          push('/retailer');
+          break;
+        case UserRole.SUPPLIER.toLowerCase():
+          push('/supplier'); 
+          break;    
+        default:     
+          break;     
+      }
+    }, [user?.role])
     
     useEffect(() =>{
       if(
@@ -109,7 +136,7 @@ const TopAppBar = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <img className="w-60" src="logo.svg" alt="img" />
+                <img className="w-56" src="logo.svg" alt="img" />
               </div>
               <div className="hidden md:block">{/* Desktop Menu */}</div>
             </div>

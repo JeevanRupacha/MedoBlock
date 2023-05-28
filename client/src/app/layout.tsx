@@ -1,3 +1,4 @@
+import TopAppBar from '@/shared/ui/topAppBar/TopAppBar'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-primary-dark max-w-7xl m-auto pt-10`}>{children}</body>
+      <body className={`${inter.className} bg-primary-dark max-w-7xl m-auto pt-10`}>
+        <TopAppBar/>
+        {children}
+      </body>
     </html>
   )
 }

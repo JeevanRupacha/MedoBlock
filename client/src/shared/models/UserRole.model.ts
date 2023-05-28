@@ -1,11 +1,20 @@
 enum UserRole{
-    SUPPLIER = "Supplier",
     MANUFACTURER = "Manufacturer",
+    SUPPLIER = "Supplier",
     CARRIER = "Carrier",
     RETAILER = "Retailer",
     CUSTOMER = "Customer",
     FDA_ADMIN= "FDA Admin",
     NONE = "None"
 };
+
+export type UserRoleType = 
+| "Customer"
+| "Supplier"
+| "None"   
+| "Manufacturer"   
+| "Carrier"   
+| "Customer" 
+| "FDA Admin" 
 
 export default UserRole;
