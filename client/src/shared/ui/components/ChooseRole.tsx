@@ -9,18 +9,18 @@ import UserRole from '@/shared/models/UserRole.model';
 
 interface ChooseRoleProps{
     open: boolean,
+    onClose: () => void,
     onSelect: (role: UserRole) => void 
 }
 
 export default function ChooseRole({
     open = false,
+    onClose,
     onSelect
-}: ChooseRoleProps) {
-    const cancelButtonRef = useRef(null)
-  
+}: ChooseRoleProps) {  
     return (
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={() => {}}>
+        <Dialog as="div" className="relative z-10" onClose={() => onClose()}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

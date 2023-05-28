@@ -129,6 +129,7 @@ const TopAppBar = () => {
       <nav>
         <ChooseRole
           open = { openChooseRole }
+          onClose={() => setOpenChooseRole(false)}
           onSelect={(role) => onSelectRole(role, user)}
         />
 
@@ -140,10 +141,6 @@ const TopAppBar = () => {
               </div>
               <div className="hidden md:block">{/* Desktop Menu */}</div>
             </div>
-            
-            {/* { authLoading &&
-              <SpinLoader/>
-            } */}
 
             {isUserLogedIn ? (
                 <LogedInButton
