@@ -38,21 +38,17 @@ const HomeLanding = () => {
   }
 
   const supplierDesc = "Manage suppliers and their information, track deliveries, and"
-                        + "collaborate seamlessly to ensure a reliable supply chain.";
+                        + "collaborate seamlessly";
   
-  const manufacturerDesc = "Streamline production processes, monitor inventory levels,"
-                            + "and ensure compliance with industry regulations.";
+  const manufacturerDesc = "Streamline production processes, monitor inventory levels,";
+                           
+  const carrierDesc = "Efficiently manage logistics, track shipments, and optimize";
 
-  const carrierDesc = "Efficiently manage logistics, track shipments, and optimize" +
-                          "delivery routes to ensure timely and safe transportation of" +
-                          "products.";
-
-  const distributorDesc = "Manage distribution networks, track shipments, and optimize" 
-                        +"inventory to ensure timely delivery to customers.";    
+  const distributorDesc = "Manage distribution networks, track shipments, and optimize"; 
+                         
                         
-  const customerDesc = "Track order status, receive notifications, and access product" +
-                        "information easily through our user-friendly customer portal.";                      
-
+  const customerDesc = "Track order status, receive notifications, and access product";
+                        
 
   return (
     <div className="bg-supply-black min-h-screen">
@@ -106,12 +102,12 @@ const HomeLanding = () => {
       {/* card */}
       
       <div className="mx-auto pt-32 sm:px-0 lg:px-0" >
-        <div className="flex justify-center gap-6" data-aos="fade-up">
+        <div className="flex justify-center" data-aos="fade-up">
             <AccountCard description={supplierDesc} imageSrc="supplier.svg" title ={"Supplier"}/>
             <AccountCard description={manufacturerDesc} imageSrc="manufacturer.svg" title ={"Manufacturer"}/>
             <AccountCard description={carrierDesc} imageSrc="carrier.svg" title ={"Carrier"}/>
         </div>
-        <div className="flex justify-center gap-6 pt-6" data-aos="fade-up"> 
+        <div className="flex justify-center pt-6" data-aos="fade-up"> 
           <AccountCard description={distributorDesc} imageSrc="distributor.svg" title ={"Distributor"}/>
           <AccountCard description={customerDesc} imageSrc="customer.svg" title ={"Customer"}/>
         </div>
