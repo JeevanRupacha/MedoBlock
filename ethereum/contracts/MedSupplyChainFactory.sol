@@ -5,12 +5,6 @@ pragma solidity >=0.7.0 <0.9.0;
 import './MedSupplyChain.sol';
 import './MedLibrary.sol';
 import './Supplier.sol';
-// import './Transporter.sol';
-// import './Manufacturer.sol';
-// import './FdaAdmin.sol';
-// import './Retailer.sol';
-// import './Customer.sol';
-
 
 contract MedSupplyChainFactory{
     MedSupplyChain[] public medSupplyChains;
@@ -28,13 +22,4 @@ contract MedSupplyChainFactory{
     function getAllAddresses() view public returns( address[] memory){
         return medSupplyChainAddresses;
     }
-
-    // function getSupplies() view public returns() {
-    // 
-    // }
-
-    // function getAllSupplies() view public returns (MedSupplyChain[] memory){
-    //     Supplier sp = medSupplyChains[0].supplier;
-    //     return medSupplyChains;
-    // } 
 }

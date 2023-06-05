@@ -6,7 +6,6 @@ export default function Home() {
   return (
     <main className='min-h-screen bg-primary-dark'>
       <div>
-        {/* <TopAppBar/> */}
         <HomeLanding/>
       </div>
     </main>

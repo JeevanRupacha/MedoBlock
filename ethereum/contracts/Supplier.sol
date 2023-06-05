@@ -15,7 +15,7 @@ contract Supplier{
     // supplies 
     // raw materials list 
 
-    mapping(string => ModelsStruct.RawMaterial) public rawMaterials; //id => RawMaterial
+    mapping(string => ModelsStruct.RawMaterial) public rawMaterials;
     string[] public rawMatKeys;
 
     mapping(string => ModelsStruct.TransportEntity) public transportRequests;
@@ -24,24 +24,27 @@ contract Supplier{
     mapping(string => ModelsStruct.RawMaterial) public supplies;
     string[] public suppliesKeys;
 
-    mapping(string => ModelsStruct.RawMaterial) public manuRequests;
+    mapping(string => ModelsStruct.ManuRequestEntity) public manuRequests;
     string[] public manuReqKeys;
-
 
     function supply(
         string memory _id,
         string memory _name,
         string memory _description,
-        uint _unitCount,
-        string memory _pricePerUnit
+        uint256 _timeStamp,
+        string memory _supplierId,
+        string memory _amount,
+        string memory _price
     ) public{
         suppliesKeys.push(_id);
         ModelsStruct.RawMaterial memory rawMat = ModelsStruct.RawMaterial({
             id: _id,
             name: _name,
             description: _description,
-            unitCount: _unitCount,
-            pricePerUnit: _pricePerUnit
+            timeStamp: _timeStamp,
+            supplierId: _supplierId,
+            amount: _amount,
+            price: _price 
         });
         supplies[_id] = rawMat;
     }
@@ -88,8 +91,8 @@ contract Supplier{
     }
 
 
-    function getManuReqests() public view returns (ModelsStruct.RawMaterial[] memory) {
-        ModelsStruct.RawMaterial[] memory result = new ModelsStruct.RawMaterial[](manuReqKeys.length);
+    function getManuReqests() public view returns (ModelsStruct.ManuRequestEntity[] memory) {
+        ModelsStruct.ManuRequestEntity[] memory result = new ModelsStruct.ManuRequestEntity[](manuReqKeys.length);
         
         for (uint256 i = 0; i < manuReqKeys.length; i++) {
             string storage key = manuReqKeys[i];
@@ -99,7 +102,7 @@ contract Supplier{
         return result;
     }
 
-    function getManuRequest(string memory key) public view returns (ModelsStruct.RawMaterial memory){
+    function getManuRequest(string memory key) public view returns (ModelsStruct.ManuRequestEntity memory){
         return manuRequests[key];
     }
 

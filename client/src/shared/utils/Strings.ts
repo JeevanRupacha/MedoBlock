@@ -32,6 +32,7 @@ const CUSTOMER_DESC =
 
 
 const USER_ROLE_DOC_NAME = "user_role";
+const USER_DOC_NAME = "users";
 
 export default {
     APP_NAME,
@@ -40,5 +41,6 @@ export default {
     TRANSPORTER_DESC,
     CUSTOMER_DESC,
     RETAILER_DESC,
-    USER_ROLE_DOC_NAME
+    USER_ROLE_DOC_NAME,
+    USER_DOC_NAME
 }

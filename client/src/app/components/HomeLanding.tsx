@@ -56,12 +56,8 @@ const HomeLanding = () => {
   return (
     <div className="bg-supply-black min-h-screen">
       <div className="pt-36">
-       
-
-
-
       <div className="mx-auto bg-gradient-to-br from-blue-100 via-purple-200 to-green-100 xl:rounded-3xl" data-aos="fade-up">
-  <button className="flex items-center pl-8 pr-5 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-left">
+  <button className="flex items-center pl-8 pr-5 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow text-left">
     Quality Medication Assurance
     <div className="h-10 w-10 flex items-center justify-center ml-3">
       <img src="icon.svg" alt="headerbutton" />
@@ -69,74 +65,38 @@ const HomeLanding = () => {
   </button>
  
     
-  <div className="grid grid-cols-12 items-start gap-y-8 md:gap-8">
+  <div className="grid grid-cols-12 items-start gap-y-4 md:gap-8">
     <div className="col-span-12 text-center md:col-span-6 md:text-left">
       
       <h1 className="text-text-color pt-8 font-bold text-3xl pb-8">Securely Empowering <div>Pharmacy Supply Chain</div> with Blockchain <div>Innovation</div></h1>
-      <p className="my-5 text-lg text-onSecondary-dark pb-10">
-        We make our customers' pharmacy experience <div>efficient, personalized, and exceptional.</div>
-      </p>
+      <p className="my-5 text-lg text-onSecondary-dark pr-8 pb-10">
+        We make our customers' pharmacy experience efficient, personalized, and exceptional.
+      </p> 
       <div className="flex content-justify">
-        <button className="flex items-center px-12 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
+        <button className="flex items-center px-16 py-2 text-sm font-medium text-onPrimary-dark rounded-full bg-green1 from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
           Explore
         </button>
-        <button className="flex items-center px-12 ml-12 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
+        <button className="flex items-center px-12 ml-4 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
           Let's know
         </button>
       </div>
     </div>
-   
 
-
-    <div className="col-span-12 md:col-span-6 flex justify-end ">
-      <div className="flex flex-col justify-start ">
-        
-        <img className="h-58 w-58 mb-5" src="Rectangle 1.svg" alt="Image 1" />
-        <img className="h-58 w-58 mt-5" src="Rectangle 2.svg" alt="Image 2" />
-      </div>
-      <div className="flex flex-col justify-start ml-5 mt-56">
-        <img className="h-64 w-64" src="Rectangle 3.svg" alt="Image 3" />
-      </div>
+    <div className="col-span-6 md:col-span-6 flex justify-end ">
+        <img className="w-58 mb-10" src="home_banner.svg" alt="Banner" />
     </div> 
-
-
-
-
-
   </div>
-
-
-  
+</div>
 </div>
 
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      <main className="mx-auto pt-32 sm:px-0 lg:px-0">
+      <main className="mx-auto pt-16 sm:px-0 lg:px-0">
         <div className="sm:px-0" data-aos="fade-up">
-          <h2 className="text-2xl font-semibold mb-4 text-text-color">
+          <h2 className="text-3xl underline-offset-4 opacity-55 font-semibold mb-8 text-text-color">
             Welcome to Our Platform
           </h2>
           <Spacer height={12} />
 
-          <p className="text-gray-300 text-clip w-3/5 overflow-hidden mb-8 text-justify">
+          <div className="text-gray-300 text-clip w-3/5 overflow-hidden mb-8 text-justify">
             <p>
               We are delighted to welcome you to our cutting-edge platform
               revolutionizing the pharmacy supply chain through blockchain
@@ -167,7 +127,7 @@ const HomeLanding = () => {
               visibility into the movement of pharmaceutical products.
             </p>
             <br />
-          </p>
+          </div>
         </div>
       </main>
 

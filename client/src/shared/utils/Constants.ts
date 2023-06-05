@@ -1,0 +1,1 @@
+const medSupplyChainFactoryAddress = '0x0c00b8436aCd946d127d8Ecf92489192828BD3a3' //deployed sepolia 

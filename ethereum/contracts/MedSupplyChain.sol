@@ -2,50 +2,55 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import './Supplier.sol';
-// import './Transporter.sol';
-// import './Manufacturer.sol';
-// import './FdaAdmin.sol';
-// import './Retailer.sol';
-// import './Customer.sol';
+import './MedLibrary.sol';
 
 contract MedSupplyChain{
+    uint public idCount;
+    uint256 public timeStamp;
 
-    uint public idCount; //unqiue id and count as well  
-
-    // supplier  -> Transporter -> Manufacturer -> Fda Admin -> Retailer -> Customer 
-    Supplier public supplier; 
-    // Transporter public transporter;
-    // Manufacturer public manufacturer;
-    // FdaAdmin public fdaAdmin;
-    // Retailer public retailer;
-    // Customer public customer;  
+    ModelsStruct.ManuRequestEntity public manuRequest;
+    ModelsStruct.SupplyEntity public supply;
+    ModelsStruct.ManuRequestEntity public manuRequestSatus;
+    ModelsStruct.TransportEntity public transportRequest;
+    ModelsStruct.TransportEntity public transportRequestStatus;
+    ModelsStruct.FdaRequestEntity public fdaRequest;
+    ModelsStruct.FdaRequestEntity public fdaRequestStatus;
+    ModelsStruct.MedicineEntity public sendRetailer;
+    ModelsStruct.TransportEntity public medicineTrasReq;
+    ModelsStruct.TransportEntity public medicineTrasReqStatus;
+    ModelsStruct.MedicineEntity public soldCustomer;
 
     constructor(uint _idCount){
         idCount = _idCount; 
+        timeStamp = block.timestamp;
     }
 
-    function createSupplier() public{
-        supplier = new Supplier();
+    function addManuRequest(
+        string memory _id,
+        string memory _name,
+        uint _count,
+        string memory _date,
+        string memory _manuId,
+        string memory _supplierId,
+        bool _requestStatus
+    ) public{
+        ModelsStruct.ManuRequestEntity memory request = 
+            ModelsStruct.ManuRequestEntity({
+                id: _id,
+                name: _name,
+                count: _count,
+                date: _date,
+                manuId: _manuId,
+                supplierId: _supplierId,
+                requestStatus: _requestStatus
+            });
+        manuRequest = request;
     }
 
-    // function createTransporter() public{
-    //     transporter = new Transporter();
-    // }
-
-    // function createManufacturer() public{
-    //     manufacturer = new Manufacturer();
-    // }
-
-    // function createFdaAdmin() public{
-    //     fdaAdmin = new FdaAdmin();
-    // }
-
-    // function createRetailer() public{
-    //     retailer = new Retailer();
-    // }
-
-    // function createCustomer() public{
-    //     customer = new Customer();
-    // }
+    function getManuRequest() view public returns(
+        ModelsStruct.ManuRequestEntity memory
+        // string memory, string memory, uint, string memory, string memory, string memory, bool
+    ){
+        return manuRequest;
+    }
 }
