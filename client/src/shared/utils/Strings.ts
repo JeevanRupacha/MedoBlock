@@ -1,29 +1,35 @@
 const APP_NAME = "MedoBlock"
 
-const SUPPLIER_DESC = "Lorem ipsum dolor sit amet consectetur adipisicing elit." +
-        "Voluptates delectus cupiditate perferendis voluptatibus" +
-        "consequuntur quaerat nulla laudantium sunt dolores in." + 
-        "consequuntur quaerat nulla laudantium sunt dolores in.";
+const SUPPLIER_DESC = "Streamlined order management and inventory tracking ."  +
 
-const TRANSPORTER_DESC = "Transporter Lorem ipsum dolor sit amet consectetur adipisicing elit." +
-        "Voluptates delectus cupiditate perferendis voluptatibus" +
-        "consequuntur quaerat nulla laudantium sunt dolores in." + 
-        "consequuntur quaerat nulla laudantium sunt dolores in.";
+"  Transparency and visibility into supply chain processes .   " +
+        " Secure and efficient transactions with manufacturers and retailers ." ;
 
-const MANUFACTURER_DESC = "Manufacturer Lorem ipsum dolor sit amet consectetur adipisicing elit." +
-        "Voluptates delectus cupiditate perferendis voluptatibus" +
-        "consequuntur quaerat nulla laudantium sunt dolores in." + 
-        "consequuntur quaerat nulla laudantium sunt dolores in."
+const TRANSPORTER_DESC = 
+"Optimized logistics and transportation management ." + 
 
-const RETAILER_DESC = "Retailer Lorem ipsum dolor sit amet consectetur adipisicing elit." +
-        "Voluptates delectus cupiditate perferendis voluptatibus" +
-        "consequuntur quaerat nulla laudantium sunt dolores in." + 
-        "consequuntur quaerat nulla laudantium sunt dolores in.";
+"Real-time tracking and traceability of shipments . " +
+"Integration with supply chain partners for seamless operations ." ;
 
-const CUSTOMER_DESC = "Customer Lorem ipsum dolor sit amet consectetur adipisicing elit." +
-        "Voluptates delectus cupiditate perferendis voluptatibus" +
-        "consequuntur quaerat nulla laudantium sunt dolores in." + 
-        "consequuntur quaerat nulla laudantium sunt dolores in."
+
+const MANUFACTURER_DESC = 
+"Enhanced product authentication and verification ."+  
+   "Efficient inventory management and demand forecasting ."+   
+  "Secure and compliant transactions with suppliers and retailers .";
+
+
+
+const RETAILER_DESC =
+"Improved inventory control and stock replenishment ." +   
+"Authentication of pharmaceutical products ."  + 
+"Seamless integration with manufacturers and customers .";
+
+
+const CUSTOMER_DESC = 
+"Access to genuine and verified pharmaceutical products ."+ 
+"Transparency and trust in the supply chain ."+   
+"Assurance of product quality and safety .";
+
 
 const USER_ROLE_DOC_NAME = "user_role";
 

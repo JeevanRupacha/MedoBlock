@@ -29,7 +29,8 @@ module.exports = {
         'homecard':'#3A3A3A',
         'form':'#32F694',
         'formtext':'#CCCCCC',
-        'green1': '#00E472'
+        'green1': '#00E472',
+        'header':'#B06025'
       }
     },
   },
