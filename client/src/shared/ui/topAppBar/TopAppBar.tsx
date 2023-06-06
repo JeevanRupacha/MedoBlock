@@ -6,13 +6,13 @@ import LogedInButton from "../components/LogedInButton";
 import { auth, googleProvider, db } from "../../../config/firebase_conn";
 import { signInWithPopup } from 'firebase/auth';
 import { authState } from 'rxfire/auth';
-import { IUser } from "@/shared/models/User.model";
 import UserRole from "@/shared/models/UserRole.model";
 import ChooseRole from "../components/ChooseRole";
 import { addUserRole, getUserRole} from "./apiHelper";
 import IUserRoleData from "@/shared/models/UserRoleData.model";
 import getEnumKeyByValue from "@/shared/utils/getEnumByValue";
 import { useRouter } from 'next/navigation';
+import IUser from "@/shared/models/User.model";
 
 const TopAppBar = () => {
     const [isUserLogedIn, setLogedIn] = useState(false) 

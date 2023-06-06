@@ -120,13 +120,6 @@ const HomeLanding = () => {
               transparent and accountable transactions.
             </p>
             <br />
-            <p>
-              {" "}
-              Through our user-friendly interface, you can seamlessly navigate
-              and access essential features that empower you with real-time
-              visibility into the movement of pharmaceutical products.
-            </p>
-            <br />
           </div>
         </div>
       </main>

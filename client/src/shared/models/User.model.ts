@@ -7,4 +7,5 @@ export default interface IUser {
     role: UserRole;
     imageUrl: string;
     wallet?: string;
+    contract?: string;
 }  

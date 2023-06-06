@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import ManufacturerCard from "./ManufacturerCard";
 import AOS from "aos";
 import AddButton from "@/shared/ui/components/AddButton";
+import Spacer from "@/shared/ui/components/Spacer";
+import LeftNav from "@/shared/ui/components/LeftNav";
+import LeftNavItem from "@/shared/ui/components/LeftNavItem";
+import RightContainer from "@/shared/ui/components/RightContainer";
 
 enum TabType{
     HISTORY,
@@ -63,10 +67,37 @@ const Manufacturer = () => {
     const productId4 = "axcf3bj343hsxcccn34nm";
     const productId5 = "axcf3bj343hsxcccn34nm";
     const productId6 = "axcf3bj343hsxcccn34nm";
+
+    const [selectedNav, setNav] = useState(0);
     
+    const LeftNavItems = 
+      <>
+        <LeftNavItem isSelected = {selectedNav == 0} label="Transactions" icon="Union.svg" onClick={() => {setNav(0)}}/>
+        <LeftNavItem isSelected={selectedNav == 1} label="Create medicine" icon="add-hexagon.svg" onClick={() => {setNav(1)}}/>
+        <LeftNavItem isSelected={selectedNav == 2} label="Apply FDA" icon="add-hexagon.svg" onClick={() => {setNav(2)}}/>
+        <LeftNavItem isSelected={selectedNav == 3} label="FDA Request" icon="add-hexagon.svg" onClick={() => {setNav(3)}}/>
+        <LeftNavItem isSelected={selectedNav == 4} label="Request Raw Material" icon="add-hexagon.svg" onClick={() => {setNav(4)}}/>
+        <LeftNavItem isSelected={selectedNav == 5} label="Medicines" icon="add-hexagon.svg" onClick={() => {setNav(5)}}/>
+      </>
+
+
+    const MainContent =
+    <>
+      <div> 
+        <p className="text-2xl text-onPrimary-dark/60"> 
+          {selectedNav == 0 && "Transitions"}
+          {selectedNav == 1 && "Create Medicine"}
+          {selectedNav == 2 && "Apply FDA"}
+          {selectedNav == 3 && "FDA Request"}
+          {selectedNav == 4 && "Request Raw Material"}
+          {selectedNav == 5 && "Medicines"}
+        </p>
+      </div>
+    </>
+
     return (
       <div>
-        <AddButton 
+        {/* <AddButton 
           imageSrc={"manufacturer.svg"}
           text="Add Medicine"
           onClick={() => {}}
@@ -92,9 +123,18 @@ const Manufacturer = () => {
                     )}
                 </div>
             </div>
-        </section>
+        </section> */}
+
+        <Spacer height={8}/>
+        <Spacer height={8}/>
+        <Spacer height={8}/>
+        
+        <div className="flex space-x-8">
+          <LeftNav children={LeftNavItems}/>
+          <RightContainer children = {MainContent}/>
+        </div>
   
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-10 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 pt-10 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           <ManufacturerCard
             fdaApproved={fdaApproved1}
             date={date1}
@@ -155,7 +195,7 @@ const Manufacturer = () => {
             price={price6}
             name={name6}
           />
-        </div>
+        </div> */}
       </div>
     );
   };
