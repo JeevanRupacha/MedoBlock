@@ -12,6 +12,7 @@ library ModelsStruct{
         string supplierId;
         string amount;
         string price;
+        string unit; //new 
     }
 
     struct SupplyEntity{

@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-primary-dark max-w-7xl m-auto pt-10`}>
+      <body suppressHydrationWarning={true} className={`${inter.className} bg-primary-dark max-w-7xl m-auto pt-10`}>
         <TopAppBar/>
         {children}
       </body>

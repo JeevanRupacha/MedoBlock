@@ -8,8 +8,7 @@ import { signInWithPopup } from 'firebase/auth';
 import { authState } from 'rxfire/auth';
 import UserRole from "@/shared/models/UserRole.model";
 import ChooseRole from "../components/ChooseRole";
-import { addUserRole, getUserRole} from "./apiHelper";
-import IUserRoleData from "@/shared/models/UserRoleData.model";
+import {getUser, addUser} from "./apiHelper";
 import getEnumKeyByValue from "@/shared/utils/getEnumByValue";
 import { useRouter } from 'next/navigation';
 import IUser from "@/shared/models/User.model";
@@ -18,8 +17,8 @@ const TopAppBar = () => {
     const [isUserLogedIn, setLogedIn] = useState(false) 
     const [user, setUser] = useState<IUser>()
     const [openChooseRole, setOpenChooseRole] = useState(false)
-    const [roleFetchLoading, setRoleLoadig] = useState(false)
-
+    const [userLoading, setUserLoadig] = useState(false)
+    const [isLogedIn, setlogin] = useState(false)
     const { push } = useRouter()
 
     const onLogin = async () => {
@@ -36,27 +35,51 @@ const TopAppBar = () => {
 
     const onSelectRole = async (role: UserRole, userArg?: IUser) => {
       setOpenChooseRole(false);
-      const roleData = {
-          "id": userArg?.id?userArg.id: "",
-          "role": role
-        } as IUserRoleData 
-
-        if(role != undefined && userArg != undefined){
-          addUserRole(roleData)
-          fetchRole(userArg);
-        }
+      updateUser(role, userArg);
     }
 
-    const fetchRole = async (userArg: IUser) => {
-        setRoleLoadig(true);
-        const result = await getUserRole(userArg.id); 
-        let role = getEnumKeyByValue(UserRole, result?.role);
-        if(role == null){
-          role = UserRole.NONE 
-        }
-        const newUser = {...userArg, "role": role} as IUser
-        setUser(newUser);
-        setRoleLoadig(false);  
+    const updateUser = async (role: UserRole, userArg?: IUser) => {
+      const smartContract = await delpoySmartContract(role);
+      const wallet = getWallet();
+      const newUser = {...userArg, "role": role, "contract": smartContract, "wallet": wallet} as IUser;
+      await addUser(newUser);
+      fetchUser(userArg?.id);
+    }
+
+    const delpoySmartContract = async (role: UserRole) => {
+      //todo 
+      //return smart contract address
+      return "sdgsdg";
+    }
+
+    const getWallet = () => {
+      //todo 
+      //return wallet address
+      return "sdgsdg";
+    }
+
+    // const fetchRole = async (userArg: IUser) => {
+    //     setRoleLoadig(true);
+    //     const result = await getUserRole(userArg.id); 
+    //     let role = getEnumKeyByValue(UserRole, result?.role);
+    //     if(role == null){
+    //       role = UserRole.NONE 
+    //     }
+    //     const newUser = {...userArg, "role": role} as IUser
+    //     setUser(newUser);
+    //     setRoleLoadig(false);  
+    // }
+
+    const fetchUser = async (id?: string) =>{
+      setUserLoadig(true);
+      const userResult = await getUser(id);
+      if(userResult != null){
+        let role = getEnumKeyByValue(UserRole, userResult?.role);
+        if(role == null){ role = UserRole.NONE }
+        const user  = {...userResult, "role": role};
+        setUser(user as IUser);
+      }
+      setUserLoadig(false);
     }
 
     useEffect(() => {
@@ -89,15 +112,15 @@ const TopAppBar = () => {
     
     useEffect(() =>{
       if(
-        !roleFetchLoading &&
+        !userLoading &&
         user?.id != undefined &&
-        (user?.role == UserRole.NONE || user?.role == null)
+        (user?.role == UserRole.NONE || user?.role == undefined)
       ){
         setOpenChooseRole(true);
       }else{
         setOpenChooseRole(false);
       }
-    },[user])
+    },[user, userLoading])
 
     useEffect(() => {
       authState(auth).subscribe(user => {
@@ -108,12 +131,13 @@ const TopAppBar = () => {
           "role": UserRole.NONE,
           "imageUrl": user?.photoURL
         } as IUser;
-        setUser(resultUser)
-        fetchRole(resultUser)
+        setUser(resultUser);
+        if(user?.uid != null) setLogedIn(true)
+        fetchUser(user?.uid)
       });
 
       // when you load or reload the page
-      auth.onAuthStateChanged(async auth => {
+    auth.onAuthStateChanged(async auth => {
         if (auth) {
           setLogedIn(true);
           console.log('Loged in');

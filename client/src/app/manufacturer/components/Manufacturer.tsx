@@ -74,10 +74,10 @@ const Manufacturer = () => {
       <>
         <LeftNavItem isSelected = {selectedNav == 0} label="Transactions" icon="Union.svg" onClick={() => {setNav(0)}}/>
         <LeftNavItem isSelected={selectedNav == 1} label="Create medicine" icon="add-hexagon.svg" onClick={() => {setNav(1)}}/>
-        <LeftNavItem isSelected={selectedNav == 2} label="Apply FDA" icon="add-hexagon.svg" onClick={() => {setNav(2)}}/>
-        <LeftNavItem isSelected={selectedNav == 3} label="FDA Request" icon="add-hexagon.svg" onClick={() => {setNav(3)}}/>
-        <LeftNavItem isSelected={selectedNav == 4} label="Request Raw Material" icon="add-hexagon.svg" onClick={() => {setNav(4)}}/>
-        <LeftNavItem isSelected={selectedNav == 5} label="Medicines" icon="add-hexagon.svg" onClick={() => {setNav(5)}}/>
+        <LeftNavItem isSelected={selectedNav == 2} label="Apply FDA" icon="verify_ic.svg" onClick={() => {setNav(2)}}/>
+        <LeftNavItem isSelected={selectedNav == 3} label="FDA Request" icon="hand.svg" onClick={() => {setNav(3)}}/>
+        <LeftNavItem isSelected={selectedNav == 4} label="Request Raw Material" icon="wrap-text.svg" onClick={() => {setNav(4)}}/>
+        <LeftNavItem isSelected={selectedNav == 5} label="Medicines" icon="pills.svg" onClick={() => {setNav(5)}}/>
       </>
 
 
@@ -132,7 +132,7 @@ const Manufacturer = () => {
         <div className="flex space-x-8">
           <LeftNav children={LeftNavItems}/>
           <RightContainer children = {MainContent}/>
-        </div>
+        </div> 
   
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 pt-10 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           <ManufacturerCard
