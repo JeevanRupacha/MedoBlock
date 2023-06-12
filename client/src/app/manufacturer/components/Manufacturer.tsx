@@ -97,34 +97,6 @@ const Manufacturer = () => {
 
     return (
       <div>
-        {/* <AddButton 
-          imageSrc={"manufacturer.svg"}
-          text="Add Medicine"
-          onClick={() => {}}
-        />
-        <section>
-            <div className="pt-20 flex cursor-pointer font-medium">
-                <div>
-                    <div 
-                        onClick={() => onSelectTab(TabType.HISTORY)}
-                        className={`${selectedTab == TabType.HISTORY ? ("text-button"): ("text-onSecondary-dark")}`}
-                    >History</div>
-                    {selectedTab == TabType.HISTORY &&(
-                        <div className="h-0.5 bg-onSecondary-dark w-full"></div>
-                    )}
-                </div>
-                <div className="pl-4">
-                    <div
-                        onClick={() => onSelectTab(TabType.FDA_REQUEST)} 
-                        className={`${selectedTab == TabType.FDA_REQUEST ? ("text-button"): ("text-onSecondary-dark")}`}
-                    >FDA Request</div>
-                    {selectedTab == TabType.FDA_REQUEST &&(
-                        <div className="h-0.5 bg-onSecondary-dark w-full"></div>
-                    )}
-                </div>
-            </div>
-        </section> */}
-
         <Spacer height={8}/>
         <Spacer height={8}/>
         <Spacer height={8}/>

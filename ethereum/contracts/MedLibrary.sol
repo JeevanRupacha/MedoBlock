@@ -43,6 +43,7 @@ library ModelsStruct{
     struct MedicineEntity{
         string id;
         string name;
+        string manuId;
         string manuDate;
         string expDate;
         bool fdaStatus;
@@ -65,6 +66,8 @@ library ModelsStruct{
     struct FdaRequestEntity{
         address manuAddress;
         address fdaAddress;
+        string manuId;
+        string adminId;
         string status;
         string date;
     }

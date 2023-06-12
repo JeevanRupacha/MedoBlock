@@ -18,7 +18,6 @@ const TopAppBar = () => {
     const [user, setUser] = useState<IUser>()
     const [openChooseRole, setOpenChooseRole] = useState(false)
     const [userLoading, setUserLoadig] = useState(false)
-    const [isLogedIn, setlogin] = useState(false)
     const { push } = useRouter()
 
     const onLogin = async () => {

@@ -68,7 +68,7 @@ const HomeLanding = () => {
   <div className="grid grid-cols-12 items-start gap-y-4 md:gap-8">
     <div className="col-span-12 text-center md:col-span-6 md:text-left">
       
-      <h1 className="text-text-color pt-8 font-bold text-3xl pb-8">Securely Empowering <div>Pharmacy Supply Chain</div> with Blockchain <div>Innovation</div></h1>
+      <h1 className="text-text-color pt-8 font-bold text-3xl pb-8 pr-24">Securely Empowering Pharmacy Supply Chain with Blockchain</h1>
       <p className="my-5 text-lg text-onSecondary-dark pr-8 pb-10">
         We make our customers' pharmacy experience efficient, personalized, and exceptional.
       </p> 

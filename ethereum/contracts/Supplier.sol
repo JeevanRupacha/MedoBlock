@@ -5,16 +5,6 @@ pragma solidity >=0.7.0 <0.9.0;
 import './MedLibrary.sol';
 
 contract Supplier{
-    // manufacturer request 
-    
-    //optional 
-    //Fda admin request 
-    //fda Admin accept  
-    
-    // transporter request 
-    // supplies 
-    // raw materials list 
-
     mapping(string => ModelsStruct.RawMaterial) public rawMaterials;
     string[] public rawMatKeys;
 
@@ -31,91 +21,112 @@ contract Supplier{
         string memory _id,
         string memory _name,
         string memory _description,
-        uint256 _timeStamp,
         string memory _supplierId,
         string memory _amount,
-        string memory _price
+        string memory _price,
+        string memory _unit 
     ) public{
         suppliesKeys.push(_id);
         ModelsStruct.RawMaterial memory rawMat = ModelsStruct.RawMaterial({
             id: _id,
             name: _name,
             description: _description,
-            timeStamp: _timeStamp,
+            timeStamp: block.timestamp,
             supplierId: _supplierId,
             amount: _amount,
-            price: _price 
+            price: _price,
+            unit: _unit  
         });
         supplies[_id] = rawMat;
     }
 
-    function tranport(string memory key, ModelsStruct.TransportEntity memory _transport) public{
-        transReqKeys.push(key);
-        transportRequests[key] = _transport;
+    function addRawMaterial(
+        string memory _id,
+        string memory _name,
+        string memory _description,
+        string memory _supplierId,
+        string memory _amount,
+        string memory _price,
+        string memory _unit  
+    ) public {
+        rawMatKeys.push(_id);
+        ModelsStruct.RawMaterial memory rawMat = ModelsStruct.RawMaterial({
+            id: _id,
+            name: _name,
+            description: _description,
+            timeStamp: block.timestamp,
+            supplierId: _supplierId,
+            amount: _amount,
+            price: _price,
+            unit: _unit  
+        });
+        rawMaterials[_id] = rawMat;
     }
 
+    function requestTransport(
+        string memory _id,
+        string memory _initDate,
+        string memory _completeDate,
+        address  _transporter,
+        address  _fromAddress,
+        address  _toAddress,
+        string memory _fromUserId,
+        string memory _toUserId,
+        string memory _status,
+        string memory _cost,
+        string memory _fromLocation,
+        string memory _toLocation
+    ) public {
+        transReqKeys.push(_id);
+        ModelsStruct.TransportEntity memory transport = ModelsStruct.TransportEntity({
+            id: _id,
+            initDate: _initDate,
+            completeDate: _completeDate,
+            transporter: _transporter,
+            fromAddress: _fromAddress,
+            toAddress: _toAddress,
+            fromUserId: _fromUserId,
+            toUserId: _toUserId,
+            status: _status,
+            cost: _cost,
+            fromLocation: _fromLocation,
+            toLocation: _toLocation
+        });
+        transportRequests[_id] = transport;
+    }
 
-    function getRawMaterials() public view returns (ModelsStruct.RawMaterial[] memory) {
-        ModelsStruct.RawMaterial[] memory result = new ModelsStruct.RawMaterial[](rawMatKeys.length);
-        
-        for (uint256 i = 0; i < rawMatKeys.length; i++) {
-            string storage key = rawMatKeys[i];
-            result[i] = rawMaterials[key];
-        }
-
-        return result;
+    function manuTransport(
+        string memory _id,
+        string memory _name,
+        uint _count,
+        string memory _date,
+        string memory _manuId,
+        string memory _supplierId,
+        bool _requestStatus
+    ) public {
+        manuReqKeys.push(_id);
+        ModelsStruct.ManuRequestEntity memory manuRequest = ModelsStruct.ManuRequestEntity({
+            id: _id,
+            name: _name,
+            count: _count,
+            date: _date,
+            manuId: _manuId,
+            supplierId: _supplierId,
+            requestStatus: _requestStatus
+        });
+        manuRequests[_id] = manuRequest;
     }
 
     function getRawMaterial(string memory key) public view returns (ModelsStruct.RawMaterial memory){
         return rawMaterials[key];
     }
 
-
-    function getSupplies() public view returns (ModelsStruct.RawMaterial[] memory) {
-        ModelsStruct.RawMaterial[] memory result = new ModelsStruct.RawMaterial[](transReqKeys.length);
-        
-        for (uint256 i = 0; i < suppliesKeys.length; i++) {
-            string storage key = suppliesKeys[i];
-            result[i] = supplies[key];
-        }
-
-        return result;
-    }
-
     function getSupply(string memory key) public view returns (ModelsStruct.RawMaterial memory){
         return supplies[key];
     }
 
-    function getSuppliesKeys() public view returns (string[] memory){
-        return suppliesKeys;
-    }
-
-
-    function getManuReqests() public view returns (ModelsStruct.ManuRequestEntity[] memory) {
-        ModelsStruct.ManuRequestEntity[] memory result = new ModelsStruct.ManuRequestEntity[](manuReqKeys.length);
-        
-        for (uint256 i = 0; i < manuReqKeys.length; i++) {
-            string storage key = manuReqKeys[i];
-            result[i] = manuRequests[key];
-        }
-
-        return result;
-    }
-
     function getManuRequest(string memory key) public view returns (ModelsStruct.ManuRequestEntity memory){
         return manuRequests[key];
-    }
-
-
-    function getTransportRequests() public view returns (ModelsStruct.TransportEntity[] memory) {
-        ModelsStruct.TransportEntity[] memory result = new ModelsStruct.TransportEntity[](transReqKeys.length);
-        
-        for (uint256 i = 0; i < transReqKeys.length; i++) {
-            string storage key = transReqKeys[i];
-            result[i] = transportRequests[key];
-        }
-
-        return result;
     }
 
     function getTransportRequest(string memory key) public view returns (ModelsStruct.TransportEntity memory){
