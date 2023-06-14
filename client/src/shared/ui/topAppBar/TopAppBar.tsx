@@ -170,6 +170,7 @@ const TopAppBar = () => {
                   userImage = {user?.imageUrl? user.imageUrl : ""}
                   userType = {user?.role? user.role : UserRole.NONE}
                   name = {user?.name? user.name : ""}
+                  onSelectRole={() => setOpenChooseRole(true)}
                   logout={() => logOut()}
                 />
                 ): (
