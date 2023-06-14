@@ -7,6 +7,7 @@ import Spacer from "@/shared/ui/components/Spacer";
 import LeftNavItem from "@/shared/ui/components/LeftNavItem";
 import LeftNav from "@/shared/ui/components/LeftNav";
 import RightContainer from "@/shared/ui/components/RightContainer";
+import CreateRawMaterial from "./CreateRawMaterial";
 
 const SupplierMain = () => {
     const currentDate = new Date().toDateString();
@@ -66,7 +67,7 @@ const SupplierMain = () => {
       <div> 
         <p className="text-2xl text-onPrimary-dark/60"> 
           {selectedNav == 0 && "Supplies"}
-          {selectedNav == 1 && "Create Raw Material"}
+          {selectedNav == 1 && <CreateRawMaterial/>}
           {selectedNav == 2 && "Transport Request"}
           {selectedNav == 3 && "Requets"}
         </p>
@@ -83,7 +84,11 @@ const SupplierMain = () => {
           <LeftNav children={LeftNavItems}/>
           <RightContainer children = {MainContent}/>
         </div>
-        </div> 
+
+        <Spacer height={8}/>
+        <Spacer height={8}/>
+        <Spacer height={8}/>
+      </div> 
     );
   
   // return (
