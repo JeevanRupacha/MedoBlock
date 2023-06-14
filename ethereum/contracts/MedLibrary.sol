@@ -13,16 +13,19 @@ library ModelsStruct{
         string amount;
         string price;
         string unit; //new 
+        address medSupplyChainAddr;
     }
 
     struct SupplyEntity{
         string id;
         string supplierId;
+        string RawMaterialId;
         string toId;
         string name;
         string description;
         uint unitCount;
         string pricePerUnit;
+        address medSupplyChainAddr;
     }
 
     struct TransportEntity{
@@ -38,6 +41,7 @@ library ModelsStruct{
         string cost;
         string fromLocation;
         string toLocation;
+        address medSupplyChainAddr;
     }
 
     struct MedicineEntity{
@@ -51,6 +55,7 @@ library ModelsStruct{
         string fdaAdminId;
         string price;
         uint count;
+        address medSupplyChainAddr;
     }
 
     struct ManuRequestEntity{
@@ -61,6 +66,7 @@ library ModelsStruct{
         string manuId;
         string supplierId;
         bool requestStatus;
+        address medSupplyChainAddr;
     }
 
     struct FdaRequestEntity{
@@ -70,6 +76,7 @@ library ModelsStruct{
         string adminId;
         string status;
         string date;
+        address medSupplyChainAddr;
     }
 }
 
