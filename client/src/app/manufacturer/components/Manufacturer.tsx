@@ -8,6 +8,7 @@ import Spacer from "@/shared/ui/components/Spacer";
 import LeftNav from "@/shared/ui/components/LeftNav";
 import LeftNavItem from "@/shared/ui/components/LeftNavItem";
 import RightContainer from "@/shared/ui/components/RightContainer";
+import RequestRawMaterial from "./RequestRawMaterial";
 
 enum TabType{
     HISTORY,
@@ -89,7 +90,7 @@ const Manufacturer = () => {
           {selectedNav == 1 && "Create Medicine"}
           {selectedNav == 2 && "Apply FDA"}
           {selectedNav == 3 && "FDA Request"}
-          {selectedNav == 4 && "Request Raw Material"}
+          {selectedNav == 4 && <RequestRawMaterial/>}
           {selectedNav == 5 && "Medicines"}
         </p>
       </div>

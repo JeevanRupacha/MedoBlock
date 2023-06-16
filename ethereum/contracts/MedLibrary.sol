@@ -2,82 +2,79 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
-library ModelsStruct{
 
-    struct RawMaterial{
-        string id;
-        string name;
-        string description;
-        uint256 timeStamp;
-        string supplierId;
-        string amount;
-        string price;
-        string unit; //new 
-        address medSupplyChainAddr;
-    }
+struct SupplyEntity{
+    string id;
+    string supplierId;
+    string RawMaterialId;
+    string toId;
+    string name;
+    uint unitCount;
+    string pricePerUnit;
+    address medSupplyChainAddr;
+}
 
-    struct SupplyEntity{
-        string id;
-        string supplierId;
-        string RawMaterialId;
-        string toId;
-        string name;
-        string description;
-        uint unitCount;
-        string pricePerUnit;
-        address medSupplyChainAddr;
-    }
+struct TransportEntity{
+    string id;
+    string initDate;
+    string completeDate;
+    address transporter;
+    address fromAddress;
+    address toAddress;
+    string fromUserId;
+    string toUserId;
+    string status;
+    string cost;
+    string fromLocation;
+    string toLocation;
+    address medSupplyChainAddr;
+}
 
-    struct TransportEntity{
-        string id;
-        string initDate;
-        string completeDate;
-        address transporter;
-        address fromAddress;
-        address toAddress;
-        string fromUserId;
-        string toUserId;
-        string status;
-        string cost;
-        string fromLocation;
-        string toLocation;
-        address medSupplyChainAddr;
-    }
+struct MedicineEntity{
+    string id;
+    string name;
+    string manuId;
+    string manuDate;
+    string expDate;
+    bool fdaStatus;
+    string manuLocation;
+    string fdaAdminId;
+    string price;
+    uint count;
+    address medSupplyChainAddr;
+}
 
-    struct MedicineEntity{
-        string id;
-        string name;
-        string manuId;
-        string manuDate;
-        string expDate;
-        bool fdaStatus;
-        string manuLocation;
-        string fdaAdminId;
-        string price;
-        uint count;
-        address medSupplyChainAddr;
-    }
+struct ManuRequestEntity{
+    string id;
+    string name;
+    uint count;
+    string date;
+    string manuId;
+    string supplierId;
+    string rawMaterialId;
+    bool requestStatus;
+    address medSupplyChainAddr;
+}
 
-    struct ManuRequestEntity{
-        string id;
-        string name;
-        uint count;
-        string date;
-        string manuId;
-        string supplierId;
-        bool requestStatus;
-        address medSupplyChainAddr;
-    }
+struct FdaRequestEntity{
+    address manuAddress;
+    address fdaAddress;
+    string manuId;
+    string adminId;
+    string status;
+    string date;
+    address medSupplyChainAddr;
+}
 
-    struct FdaRequestEntity{
-        address manuAddress;
-        address fdaAddress;
-        string manuId;
-        string adminId;
-        string status;
-        string date;
-        address medSupplyChainAddr;
-    }
+struct RawMaterial{
+    string id;
+    string name;
+    string description;
+    uint256 timeStamp;
+    string supplierId;
+    string amount;
+    string price;
+    string unit; //new 
 }
 
 enum UserRole{

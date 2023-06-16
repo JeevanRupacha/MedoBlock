@@ -1,5 +1,5 @@
-import {doc, setDoc, getDoc} from "firebase/firestore"; 
-import { auth, googleProvider, db } from "../../../config/firebase_conn";
+import {doc, setDoc, getDoc, getDocs, collection} from "firebase/firestore"; 
+import { auth, googleProvider, db } from "../../config/firebase_conn";
 import Strings from "@/shared/utils/Strings";
 import IUserRoleData from "@/shared/models/UserRoleData.model";
 import IUser from "@/shared/models/User.model";
@@ -32,4 +32,26 @@ const getUser = async (docID?: string) => {
     return docSnap.data();
 }
 
-export { addUserRole, getUserRole, addUser, getUser};
+const getAllUsers = async () => {
+    const collectionRef = collection(db,  Strings.USER_DOC_NAME);
+    const docSnap = await getDocs(collectionRef);
+    const users: IUser[]  = []
+
+    await docSnap.forEach((doc) => {
+        console.log(doc.data())
+        const result = doc.data()
+        const user = {
+            id: result.id,
+            name: result.name,
+            email: result.email,
+            role: result.role,
+            imageUrl: result.imageUrl,
+            wallet: result.wallet,
+            contract: result.contract
+        } as IUser
+        users.push(user);
+    })
+    return users;
+}
+
+export { addUserRole, getUserRole, addUser, getUser, getAllUsers};

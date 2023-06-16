@@ -5,7 +5,7 @@ interface RightContainerPorps{
 const RightContainer = ({children}: RightContainerPorps) => {
     return(
         <>
-            <div className="w-full h-fit p-4 bg-card-color rounded-md">
+            <div className="w-full h-fit p-6 bg-card-color rounded-md">
                 {children}
             </div>
         </>

@@ -6,16 +6,18 @@ interface RawMaterialCardProps{
     supplierId: string,
     amount: Number,
     price: string,
-    unit: string 
-} 
+    unit: string,
+    clickable?: boolean,
+    onClick?: () => void  
+}
 
 
 const RawMaterialCard = ({
-    rawMatID, name, description, timeStamp, supplierId, amount, price, unit 
+    rawMatID, name, description, timeStamp, supplierId, amount, price, unit, clickable, onClick
 }: RawMaterialCardProps) => {
     return(
         <>
-            <div className="w-96 bg-onPrimary-light p-4 rounded-xl">
+            <div onClick = {clickable ? (onClick) : (() => {})} className={`min-w-96 bg-onPrimary-light p-4 rounded-xl ${(clickable)? "cursor-pointer" : ''}`}>
                 <p className="text-sm text-orange-300">{rawMatID}</p>
                 <p className="text-lg mt-2">{name}</p>
                 <p className="text-lg mt-4">Description</p>

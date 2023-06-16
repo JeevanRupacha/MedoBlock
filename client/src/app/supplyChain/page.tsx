@@ -1,11 +1,10 @@
-import TopAppBar from "@/shared/ui/topAppBar/TopAppBar"
-import TransporterMain from "./components/TransporterMain"
+import SupplyChain from "./components/SupplyChain";
 
 export default function Home() {
     return (
       <main className='min-h-screen bg-primary-black'>
         <div>
-          <TransporterMain/>
+          <SupplyChain/>
         </div>
       </main>
     )

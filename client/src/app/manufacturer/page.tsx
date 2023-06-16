@@ -4,7 +4,6 @@ import Manufacturer from "./components/Manufacturer";
 const Home = () => {
     return (
       <main className='min-h-screen'>
-        {/* <TopAppBar/> */}
         <Manufacturer/>
       </main>
     )

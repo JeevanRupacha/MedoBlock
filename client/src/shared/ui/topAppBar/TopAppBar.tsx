@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoginButton from "../components/LoginButton";
 import LogedInButton from "../components/LogedInButton";
 import { auth, googleProvider, db } from "../../../config/firebase_conn";
@@ -8,10 +8,16 @@ import { signInWithPopup } from 'firebase/auth';
 import { authState } from 'rxfire/auth';
 import UserRole from "@/shared/models/UserRole.model";
 import ChooseRole from "../components/ChooseRole";
-import {getUser, addUser} from "./apiHelper";
+import {getUser, addUser} from "../../utils/apiHelper";
 import getEnumKeyByValue from "@/shared/utils/getEnumByValue";
 import { useRouter } from 'next/navigation';
 import IUser from "@/shared/models/User.model";
+import { BlockchainContext } from "@/store/context/BlockchainContext";
+import BlockchainData from "@/shared/models/BlockchainData.model";
+
+interface BlockchainContextValue{
+  value: string
+}
 
 const TopAppBar = () => {
     const [isUserLogedIn, setLogedIn] = useState(false) 
@@ -77,6 +83,7 @@ const TopAppBar = () => {
         if(role == null){ role = UserRole.NONE }
         const user  = {...userResult, "role": role};
         setUser(user as IUser);
+        localStorage.setItem('user', JSON.stringify(user));
       }
       setUserLoadig(false);
     }
@@ -165,6 +172,7 @@ const TopAppBar = () => {
               <div className="hidden md:block">{/* Desktop Menu */}</div>
             </div>
 
+            <div onClick={() => {push('supplyChain')}}><img className="w-10 cursor-pointer hover:opacity-50" src={"blockchain.png"}></img></div>
             {isUserLogedIn ? (
                 <LogedInButton
                   userImage = {user?.imageUrl? user.imageUrl : ""}

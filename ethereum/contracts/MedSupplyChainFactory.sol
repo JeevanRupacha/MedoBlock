@@ -4,7 +4,6 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import './MedSupplyChain.sol';
 import './MedLibrary.sol';
-import './Supplier.sol';
 
 contract MedSupplyChainFactory{
     MedSupplyChain[] public medSupplyChains;

@@ -8,6 +8,9 @@ import LeftNavItem from "@/shared/ui/components/LeftNavItem";
 import LeftNav from "@/shared/ui/components/LeftNav";
 import RightContainer from "@/shared/ui/components/RightContainer";
 import CreateRawMaterial from "./CreateRawMaterial";
+import Requests from "./Requests";
+import Supplies from "./Supplies";
+import TransportRequest from "./TransportRequest";
 
 const SupplierMain = () => {
     const currentDate = new Date().toDateString();
@@ -66,10 +69,10 @@ const SupplierMain = () => {
     <> 
       <div> 
         <p className="text-2xl text-onPrimary-dark/60"> 
-          {selectedNav == 0 && "Supplies"}
+          {selectedNav == 0 && <Supplies/>}
           {selectedNav == 1 && <CreateRawMaterial/>}
-          {selectedNav == 2 && "Transport Request"}
-          {selectedNav == 3 && "Requets"}
+          {selectedNav == 2 && <TransportRequest/> }
+          {selectedNav == 3 && <Requests/>}
         </p>
       </div>
     </>

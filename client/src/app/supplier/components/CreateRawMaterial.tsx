@@ -1,18 +1,127 @@
 import Input from "@/shared/ui/components/Input"
 import Loader from "@/shared/ui/components/Loader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RawMaterialCard from "./RawMaterialCard";
+import { useContext } from "react";
+import { BlockchainContext } from "@/store/context/BlockchainContext";
+import BlockchainData from "@/shared/models/BlockchainData.model";
+import { v4 as uuidv4 } from 'uuid';
+import IRawMaterial from "@/shared/models/RawMaterial.model";
+import { user } from "rxfire/auth";
+import BigNumber from "bignumber.js";
+import { timeStampToString } from "@/shared/utils/DateConverter";
+import LoaderSmall from "@/shared/ui/components/LoaderSmall";
+import RequestRawMaterial from "@/app/manufacturer/components/RequestRawMaterial";
+import RawMaterialsList from "@/shared/ui/components/RawMaterialsList";
+import { delay } from "@/shared/utils/delay";
+
 
 const CreateRawMaterial = () => {
-    
-    const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
 
-        //todo create Medsupplychain contract 
-        // update Supplier contract 
+    const [formData, setFormData] = useState({'name': '', 'description': '', 'amount': '', 'price': '', 'unit': ''});
+    const [isLoading, setLoading] = useState(false)
+    const [isFetching, setFecting] = useState(false);
+    const [filteredRawMaterials, setFilteredRawMaterials] = useState<IRawMaterial[]>()
+
+    const { 
+        walletAddress,
+        rawMaterials,
+        getRawMaterials,
+        rawMaterialsContract,
+        supplyChainFactoryContract
+    } = useContext(BlockchainContext) as BlockchainData;
+
+    const userString = localStorage.getItem('user')
+    const user = JSON.parse(userString?userString:'')
+
+    const handleChange  = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+        setFormData({...formData, [name]: e.target.value})
     }
 
-    const [isLoading, setLoading] = useState(false)
+
+    const handleSubmit = async () => {
+        //todo create Medsupplychain contract 
+        // update Supplier contract 
+        console.log(formData);
+        console.log("walletAddress Raw", walletAddress)
+        console.log("raw contract", rawMaterialsContract)
+
+        setLoading(true);
+
+       
+        
+        await rawMaterialsContract?.addRawMaterial(
+            uuidv4(),
+            formData.name,
+            formData.description, 
+            user.id, 
+            formData.amount, 
+            formData.price, 
+            formData.unit
+        )
+
+        setFecting(true)
+        await delay(10000)
+        await getRawMaterials()
+        setLoading(false)
+        setFecting(false)
+    }
+
+    useEffect(() => {
+        const filtered = rawMaterials?.filter((value)=> value.supplierId == user.id)
+        setFilteredRawMaterials(filtered)
+    }, [rawMaterials])
+
+    // function compare( a: IRawMaterial, b: IRawMaterial ) {
+    //     if ( a.timeStamp > b.timeStamp ){
+    //       return -1;
+    //     }
+    //     if ( a.timeStamp < b.timeStamp ){
+    //       return 1;
+    //     }
+    //     return 0;
+    //   }
+      
+
+    // const getRawMaterials = async () => {
+    //     try{
+    //         setFecting(true)
+    //         const keys: string[] = await rawMaterialsContract?.getRawMaterialsKeys();
+
+    //         let rawMatResult: Array<IRawMaterial> = []    
+
+    //         for (const key of keys) {
+    //             let rawMaterial = await rawMaterialsContract?.getRawMaterial(key);
+
+    //             if(rawMaterial.supplierId == user.id){
+    //                 const milliTimeStamp = rawMaterial.timeStamp.toNumber() * 1000
+    //                 rawMatResult.push({
+    //                     id: rawMaterial.id,
+    //                     name: rawMaterial.name,
+    //                     description: rawMaterial.description,
+    //                     timeStamp: timeStampToString(milliTimeStamp),
+    //                     supplierId: rawMaterial.supplierId,
+    //                     amount: rawMaterial.amount,
+    //                     price: rawMaterial.price,
+    //                     unit: rawMaterial.unit 
+    //                   });
+    //             }
+
+    //             rawMatResult = rawMatResult.sort(compare)
+    //           }
+              
+    //         //setRawMaterials(rawMatResult);
+    //         setFecting(false)
+    //     }catch(error){
+    //         console.log(error)
+    //     }
+    // }
+
+    // useEffect(( ) =>{
+    //     setFecting(true)
+    //     getRawMaterials()
+    //     setFecting(false)
+    // }, [])
     
     return(
         <>
@@ -25,63 +134,53 @@ const CreateRawMaterial = () => {
                         placeholder="Name"
                         name="name"
                         type = "text"
-                        value=""
-                        handleChange={() => {}}
+                        value={formData.name}
+                        handleChange={handleChange}
                     />
 
                     <Input 
                         placeholder="Description"
                         name="description"
                         type = "text"
-                        value=""
-                        handleChange={() => {}}
+                        value = { formData.description}
+                        handleChange={handleChange}
                     />
 
                     <Input 
                         placeholder="Amount"
                         name="amount"
                         type = "text"
-                        value=""
-                        handleChange={() => {}}
+                        value={ formData.amount}
+                        handleChange = {handleChange}
                     />
 
                     <Input 
                         placeholder="Price $"
                         name="price"
                         type = "text"
-                        value=""
-                        handleChange={() => {}}
+                        value={ formData.price}
+                        handleChange= {handleChange}
                     />
 
                     <Input 
                         placeholder="Unit eg: Kg"
                         name="unit"
                         type = "text"
-                        value=""
-                        handleChange={() => {}}
+                        value={ formData.unit}
+                        handleChange = {handleChange}
                     />
                 </div>
                 <div>
-                    {isLoading ? (<Loader/>): (
-                        <div className="align-buttom text-sm hover:bg-button/40 cursor-pointer rounded-md p-4 ml-8 bg-button text-onPrimary-light text-center font-medium"> Add Raw Material</div>
+                    {isLoading ? (<LoaderSmall/>): (
+                        <div onClick={ handleSubmit} className="align-buttom text-sm hover:bg-button/40 cursor-pointer rounded-md p-4 ml-8 bg-button text-onPrimary-light text-center font-medium"> Add Raw Material</div>
                     )}
                 </div>
             </div>
 
             <p className="font-normal mt-8 mb-4">Lists</p>
 
-            <div>
-                <RawMaterialCard
-                    rawMatID="affdd456664sdcv"
-                    description="1-tetradecanol can be used as a raw material for organic synthesis and surfactants."
-                    name="Methene-091ox"
-                    timeStamp="May 04 2023"
-                    supplierId="aacef4523xoccvd"
-                    amount={12}
-                    price="$50"
-                    unit="KG"
-                />
-            </div>
+            {isFetching && (<Loader/>) }
+            <RawMaterialsList rawMaterials={filteredRawMaterials} clickable={false} onClick={() => {}}/>            
         </div>
         </>
     );

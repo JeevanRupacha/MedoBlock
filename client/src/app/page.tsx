@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import TopAppBar from '../shared/ui/topAppBar/TopAppBar'
 import HomeLanding from './components/HomeLanding'
 
 export default function Home() {
