@@ -166,7 +166,7 @@ const TopAppBar = () => {
         <div className="mx-auto sm:px-0 lg:px-0">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
+              <div onClick={() => push('/')} className="flex-shrink-0 cursor-pointer">
                 <img className="w-56" src="logo.svg" alt="img" />
               </div>
               <div className="hidden md:block">{/* Desktop Menu */}</div>

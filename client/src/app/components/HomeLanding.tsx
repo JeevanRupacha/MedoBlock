@@ -55,38 +55,39 @@ const HomeLanding = () => {
 
   return (
     <div className="bg-supply-black min-h-screen">
-      <div className="pt-36">
-      <div className="mx-auto bg-gradient-to-br from-blue-100 via-purple-200 to-green-100 xl:rounded-3xl" data-aos="fade-up">
-  <button className="flex items-center pl-8 pr-5 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow text-left">
-    Quality Medication Assurance
-    <div className="h-10 w-10 flex items-center justify-center ml-3">
-      <img src="icon.svg" alt="headerbutton" />
-    </div>
-  </button>
+      <div className="pt-36 flex">
+      <div className="w-1/2 mx-auto bg-gradient-to-br from-blue-100 via-purple-200 to-green-100 xl:rounded-3xl" data-aos="fade-up">
+        <div className="w-fit flex items-center pl-8 pr-5 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow text-left">
+          Quality Medication Assurance
+          <div className="h-10 w-10 flex items-center justify-center ml-3">
+            <img src="icon.svg" alt="headerbutton" />
+          </div>
+        </div>
  
     
-  <div className="grid grid-cols-12 items-start gap-y-4 md:gap-8">
-    <div className="col-span-12 text-center md:col-span-6 md:text-left">
-      
-      <h1 className="text-text-color pt-8 font-bold text-3xl pb-8 pr-24">Securely Empowering Pharmacy Supply Chain with Blockchain</h1>
-      <p className="my-5 text-lg text-onSecondary-dark pr-8 pb-10">
-        We make our customers' pharmacy experience efficient, personalized, and exceptional.
-      </p> 
-      <div className="flex content-justify">
-        <button className="flex items-center px-16 py-2 text-sm font-medium text-onPrimary-dark rounded-full bg-green1 from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
-          Explore
-        </button>
-        <button className="flex items-center px-12 ml-4 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
-          Let's know
-        </button>
-      </div>
-    </div>
+        <div className="">
+          <div className="text-center md:text-left">
+            
+            <h1 className="text-text-color pt-8 font-bold text-3xl pb-8 pr-24">Securely Empowering Pharmacy Supply Chain with Blockchain</h1>
+            <p className="my-5 text-lg text-onSecondary-dark pr-8 pb-10">
+              We make our customers' pharmacy experience efficient, personalized, and exceptional.
+            </p> 
+            <div className="flex content-justify">
+              <button className="flex items-center px-16 py-2 text-sm font-medium text-onPrimary-dark rounded-full bg-green1 from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
+                Explore
+              </button>
+              <button className="flex items-center px-12 ml-4 py-0.5 text-sm font-medium text-header rounded-full bg-gradient-to-br from-text-color to-text-color shadow transition-all hover:scale-95 focus:scale-95 text-justify">
+                Let's know
+              </button>
+            </div>
+          </div>
 
-    <div className="col-span-6 md:col-span-6 flex justify-end ">
-        <img className="w-58 mb-10" src="home_banner.svg" alt="Banner" />
-    </div> 
-  </div>
-</div>
+       
+      </div>
+      </div>  
+      <div className="1/2">
+            <img className="w-full pl-16" src="home_banner.svg" alt="Banner" />
+      </div> 
 </div>
 
       <main className="mx-auto pt-16 sm:px-0 lg:px-0">
@@ -106,7 +107,7 @@ const HomeLanding = () => {
             </p>
 
             <br />
-
+{/* 
             <p>
               Our platform leverages the power of blockchain to create a
               transparent and tamper-proof ecosystem, ensuring that every step
@@ -118,7 +119,7 @@ const HomeLanding = () => {
               From manufacturers and distributors to pharmacies and healthcare
               providers, our platform serves as a centralized hub for
               transparent and accountable transactions.
-            </p>
+            </p> */}
             <br />
           </div>
         </div>
