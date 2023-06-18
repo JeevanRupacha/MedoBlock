@@ -14,6 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 import IRawMaterialRequest from '@/shared/models/RawMaterialRequest.model';
 import { todayDate } from '@/shared/utils/DateConverter';
 import { RawMatRequestToString } from '@/shared/utils/Converter';
+import Loader from '@/shared/ui/components/Loader';
+import LoaderSmall from '@/shared/ui/components/LoaderSmall';
 
 const RequestRawMaterial = () => {
     const [isLoading, setLoading] = useState(false)
@@ -40,16 +42,22 @@ const RequestRawMaterial = () => {
         setAmount(e.target.value) 
     }
 
+    //0x2Ae0F66a8Ae0DDc1c6aEDc92d0c7654945601eD5
+    //"id:f58808d6-feb2-43f5-8d93-1a686c72132a,name:rawMaterial.name,count:10,date:06/18/2023,manuId:ZsDkAMZKqvbEs6TONNKwbOA4lkl1,supplierId:ZsDkAMZKqvbEs6TONNKwbOA4lkl1,rawMaterialId:ad9306be-65fb-4b5a-821a-e9bdce765f50,requestStatus:false,medSupplyChainAddr:address"
+
     const onRequest = async () => {
         setShowDialog(false)
         setLoading(true)
 
+        // localStorage.setItem("loading", "true")
         // create medSupplyChain
-        //await supplyChainFactoryContract?.createMedSupplyChain()
+        await supplyChainFactoryContract?.createMedSupplyChain()
+
+        await delay(35000)
 
         // get medSupplyChain address 
         const address = await supplyChainFactoryContract?.getLastSupplyChainAddr()
-        console.log("SupplyChainAddress", address)
+        console.log("SupplyChainAddress lastest", address)
 
         // get medSupplyChain by address
         if(getSupplyChainContract == undefined){
@@ -77,10 +85,14 @@ const RequestRawMaterial = () => {
             medSupplyChainAddr: address 
         } as IRawMaterialRequest
 
-        const strRawMatReq = RawMatRequestToString(rawMatRequest)
-        await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq)    
+        const strRawMatReq: string = RawMatRequestToString(rawMatRequest)
+        console.log("StringrawMAt", strRawMatReq)
+        await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq)
+        
+        // delay(1000)
+        // await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq)    
 
-        // add request to RawMaterialRequest 
+        //add request to RawMaterialRequest 
         await rawMaterialRequestContract?.addRequest(
             rawMatRequest.id, rawMatRequest.name, rawMatRequest.count, rawMatRequest.date, rawMatRequest.manuId, rawMatRequest.supplierId, rawMatRequest.rawMaterialId, rawMatRequest.requestStatus, rawMatRequest.medSupplyChainAddr
         )
@@ -110,13 +122,16 @@ const RequestRawMaterial = () => {
             </div>
         </div>
     
+    const loadingContent = <div className='w-96 bg-onPrimary-light rounded-xl px-4 py-16'>
+                <LoaderSmall/>
+            </div>
 
     return(
         <>
             <div>
                 <RawMaterialsList rawMaterials={rawMaterials} clickable={true} onClick={(rawMat) => {onClickCard(rawMat)}}/>
                 <DialogModal open = {showDialog} toggle={() => setShowDialog(!showDialog)} content = {content}/>
-                <LoadingDialog isLoading = {isLoading}/>
+                <DialogModal open={isLoading} toggle = {() => {}} content = { loadingContent }/>
             </div>
         </>
     )

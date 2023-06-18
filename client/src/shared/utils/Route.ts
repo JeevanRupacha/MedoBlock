@@ -6,4 +6,6 @@ export default async function GoToCarrier(){
     }catch(e){
         console.log(e);
     }
+
+    
 };
