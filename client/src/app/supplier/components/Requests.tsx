@@ -13,12 +13,15 @@ import LoadingDialog from "@/shared/ui/components/LoadingDialog";
 import { RawMatRequestToString } from "@/shared/utils/Converter";
 import { randomUUID } from "crypto";
 import { v4 as uuidv4 } from "uuid";
+import ITransportRequest from "@/shared/models/TransportRequest.model";
 
 const Requests = () => {
     const { users }  = useContext(UsersContext) as UserContextData;
     const [showDialog, setShowDialog] = useState(false)
     const [request, setRequest]  = useState<IRawMaterialRequest>()
     const [loadig, setLoading] = useState(false)
+    const [fromLocation, setFromLocation] = useState('La: -19.78892, Lo: -40.46657')
+    const [toLocation, setToLocation] = useState('La: 25.13563, Lo: 165.49775')
 
     const strUser = localStorage.getItem('user')
     const currentUser = JSON.parse(strUser?strUser:'') as IUser
@@ -36,43 +39,58 @@ const Requests = () => {
         if(request == undefined) return 
         setShowDialog(false)
         setLoading(true)
-        await rawMaterialRequestContract?.updateRequest(
-            request?.id, request?.name, request?.count, request?.date, request?.manuId, request?.supplierId, request?.rawMaterialId,"true",request?.medSupplyChainAddr
-        )
+        try{
+            await rawMaterialRequestContract?.updateRequest(
+                request?.id, request?.name, request?.count, request?.date, request?.manuId, request?.supplierId, request?.rawMaterialId,"true",request?.medSupplyChainAddr
+            )
+    
+            if(getSupplyChainContract != undefined){
+                const supplyChainContract = getSupplyChainContract(request.medSupplyChainAddr)
+                const strRawMatReq = RawMatRequestToString(request)
+                await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq) 
+            }
+    
+            const transport = {
+                id: uuidv4(), 
+                initDate: Date.now().toString(),
+                completedDate: 'Not Yet', 
+                transporterId: user.id, 
+                fromUserId: currentUser.id, 
+                toUserId: request.manuId, 
+                status: 'REQUESTED', 
+                cost: '0', 
+                fromLocation: fromLocation, 
+                toLocation: toLocation, 
+                medSupplyChainAddr: request.medSupplyChainAddr
+            }
 
-        if(getSupplyChainContract != undefined){
-            const supplyChainContract = getSupplyChainContract(request.medSupplyChainAddr)
-            const strRawMatReq = RawMatRequestToString(request)
-            await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq) 
+            console.log("Transport", transport)
+    
+            await transportRequestContract?.addRequest(
+                transport.id,
+                transport.initDate,
+                transport.completedDate,
+                transport.transporterId,
+                transport.fromUserId,
+                transport.toUserId,
+                transport.status,
+                transport.cost,
+                transport.fromLocation,
+                transport.toLocation,
+                transport.medSupplyChainAddr
+            )
+
+            if(getSupplyChainContract == undefined) return 
+            const supplyChainContract = await getSupplyChainContract(request.medSupplyChainAddr)
+            const requestStr = JSON.stringify({...request, status: true}).replace(/"|"|{|}/g, '');
+            const transportReqStr = JSON.stringify(transport).replace(/"|"|{|}/g, '');
+
+            await supplyChainContract?.addSupplyChain("rawMatAccept", requestStr) 
+            await supplyChainContract?.addSupplyChain("transReq", transportReqStr) 
+        }catch(error){
+            console.log(error)    
+            setLoading(false)
         }
-
-        const transport = {
-            id: uuidv4(), 
-            initDate: Date.now(),
-            completedDate: '', 
-            transporterId: user.id, 
-            fromUserId: currentUser.id, 
-            toUserId: request.manuId, 
-            status: 'REQUESTED', 
-            cost: '0', 
-            fromLocation: '', 
-            toLocation: '', 
-            medSupplyChainAddr: request.medSupplyChainAddr
-        }
-
-        await transportRequestContract?.addRequest(
-            transport.id,
-            transport.initDate,
-            transport.completedDate,
-            transport.transporterId,
-            transport.fromUserId,
-            transport.toUserId,
-            transport.status,
-            transport.cost,
-            transport.fromLocation,
-            transport.toLocation,
-            transport.medSupplyChainAddr
-        )
         setLoading(false)
 
         // REQUESTED,
@@ -108,7 +126,8 @@ const Requests = () => {
                 { rawMaterialRequests?.map( request => {
                     const user = users.find((it) => it.id == request.manuId)
                     if(request.requestStatus == true) return
-                    if(request.supplierId != user?.id) return 
+                    if(request.supplierId != currentUser?.id) return 
+                    
                     return <RequestItem
                         id= {request.id}
                         status = {request.requestStatus}

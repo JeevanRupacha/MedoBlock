@@ -212,7 +212,7 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
                 });
                 //rawMatResult = rawMatResult.sort(compare)
               }
-            setTransportRequests(transportRequests);
+            setTransportRequests(transportRequests.reverse());
         }catch(error){
             console.log(error)
         }

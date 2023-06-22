@@ -1,6 +1,8 @@
 import UserContextData from "@/shared/models/UserContextData.model";
+import UserCard from "@/shared/ui/components/UserCard";
 import { trimAddress } from "@/shared/utils/trimAddress";
 import { UsersContext } from "@/store/context/UsersContext";
+import { stat } from "fs";
 import { useContext } from "react";
 import { StringLiteral } from "typescript";
 
@@ -17,7 +19,9 @@ interface TransportRequestItemProps{
     fromUserId: string;
     toUserId: string;
     transporterId: string;
-    onAccept: () => void 
+    showCheck: boolean;
+    onAccept: () => void ,
+    onClickStatus?: () => void ,
 }
 
 const TransportRequestItem = ({
@@ -33,7 +37,9 @@ const TransportRequestItem = ({
     fromUserId,
     toUserId,
     transporterId,
+    showCheck,
     onAccept,
+    onClickStatus
 }: TransportRequestItemProps) => {
 
     console.log("completedDate", completedDate)
@@ -57,17 +63,19 @@ const TransportRequestItem = ({
                         <p className="text-orange-300 mx-auto flex justify-center">{initDate}</p>
                     </div>
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
-                        <p className="pb-2 mx-auto flex justify-center">Completed Date</p>
-                        <p className="text-orange-300 mx-auto flex justify-center">{completedDate != ''?completedDate:'In Progress'}</p>
+                    <div className="text-sm flex-row items-center justify-center w-1/12">
+                        <p className="pb-2 mx-auto flex justify-center">Cost</p>
+                        <p className="text-orange-300 mx-auto flex justify-center">${cost == ''?'Not yet':cost}</p>
+                        {/* <p className="pb-2 mx-auto flex justify-center">Completed Date</p>
+                        <p className="text-orange-300 mx-auto flex justify-center">{completedDate != ''?completedDate:'In Progress'}</p> */}
                     </div>
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
+                    <div className="text-sm flex-row items-center justify-center w-1/4">
                         <p className="pb-2 mx-auto flex justify-center">From Location</p>
                         <p className="text-orange-300 mx-auto flex justify-center">{fromLocation}</p>
                     </div>
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
+                    <div className="text-sm flex-row items-center justify-center w-1/4">
                         <p className="pb-2 mx-auto flex justify-center">To Location</p>
                         <p className="text-orange-300 mx-auto flex justify-center">{toLocation}</p>
                     </div>
@@ -76,20 +84,9 @@ const TransportRequestItem = ({
                 <div className="flex pt-8">
                     <div className="w-1/2">
                         <div className="text-sm flex items-center justify-center">
-                            <div className="flex justify-center items-center p-2 rounded-md bg-card-color mr-2">
-                                <img className="w-8 rounded-full" src={fromUser?.imageUrl} alt="img" />
-                                <p className="pl-2">{fromUser?.name}</p>
-                            </div>
-
-                            <div className="flex justify-center items-center p-2 rounded-md bg-card-color mr-2">
-                                <img className="w-8 rounded-full" src={transporterUser?.imageUrl} alt="img" />
-                                <p className="pl-2">{transporterUser?.name}</p>
-                            </div>
-
-                            <div className="flex justify-center items-center p-2 rounded-md bg-card-color">
-                                <img className="w-8 rounded-full" src={toUser?.imageUrl} alt="img" />
-                                <p className="pl-2">{toUser?.name}</p>
-                            </div>
+                            <UserCard name = {fromUser?.name} imageUrl={fromUser?.imageUrl}/>
+                            <UserCard name = {transporterUser?.name} imageUrl={transporterUser?.imageUrl}/>
+                            <UserCard name = {toUser?.name} imageUrl={toUser?.imageUrl}/>
                         </div>
 
                         <div className="flex text-sm justify-center pl-8 mt-4">
@@ -103,24 +100,50 @@ const TransportRequestItem = ({
                         </div>
                     </div>
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
+                    {/* <div className="text-sm flex-row items-center justify-center w-1/5">
                         <p className="pb-2 mx-auto flex justify-center">Cost</p>
                         <p className="text-orange-300 mx-auto flex justify-center">{cost == ''?'Not yet':cost}</p>
-                    </div>
+                    </div> */}
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
-                        <p className="pb-2 mx-auto flex justify-center">Status</p>
-                        <p className="text-orange-300 mx-auto flex justify-center">{status}</p>
-                    </div>
+                    <div className={`text-sm flex-row items-center justify-center w-1/4 mt-4`}>
 
-                    <div className="text-sm flex-row items-center justify-center w-1/5">
-                        {status == 'COMPLETED'? (
-                            <p className="text-button text-lg flex justify-center items-center">Done</p>
-                        ) : (
-                            <div onClick = {() => onAccept() }className="flex justify-center items-center cursor-pointer">
-                                <img className="hover:opacity-60" src="check.png" alt="check"/>
+                        {status == 'COMPLETED'?(
+                            <div>
+                                <p className="pb-2 mx-auto flex justify-center">{status}</p>
+                                <p className="text-orange-300 mx-auto flex justify-center">{completedDate}</p>
+                            </div>
+                        ):(
+                            <div onClick={() => (onClickStatus != undefined)?onClickStatus(): {}} className={`${showCheck ? 'bg-slate-600 py-3 hover:opacity-70 rounded-2xl cursor-pointer' : ''}`}>
+                                <p className="pb-2 mx-auto flex justify-center">Status</p>
+                                <p className="text-orange-300 mx-auto flex justify-center">{status}</p>
                             </div>
                         )}
+                        
+                    </div>
+
+                    <div className="text-sm flex-row justify-center w-1/5 mt-4 items-center cursor-pointer">
+                        {status == 'COMPLETED' && (
+                            <p className="text-button text-lg flex justify-center items-center">Done</p>
+                        )}
+
+                        {(status == 'REQUESTED' && showCheck) && (
+                            <div onClick = {() => onAccept() }className="flex justify-center items-center cursor-pointer">
+                                <img className="hover:opacity-40" src="check.png" alt="check"/>
+                            </div>
+                        )}
+
+                        { (status != 'COMPLETED' && !showCheck) && (
+                            <div className="flex justify-center items-center cursor-pointer">
+                                <img className="hover:opacity-40 w-12" src="status.png" alt="check"/>
+                            </div>
+                        )}
+
+                        { (showCheck && status != 'COMPLETED' && status != 'REQUESTED') && (
+                            <div className="flex justify-center items-center cursor-pointer">
+                                <img className="hover:opacity-40 w-12" src="status.png" alt="check"/>
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </div>

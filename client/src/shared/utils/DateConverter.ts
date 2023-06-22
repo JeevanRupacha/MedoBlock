@@ -1,9 +1,13 @@
+import { Timestamp } from "firebase/firestore";
+
 export const timeStampToString = (timeStamp: number | string) => {
     try{
         const date2 = new Date(timeStamp);
     }catch(error){
         console.log("Date error", error)
     }
+
+    if(typeof parseInt(timeStamp.toString()) != 'number') return ''
     const date = new Date(timeStamp);
 
     console.log("Date", date)
@@ -11,10 +15,13 @@ export const timeStampToString = (timeStamp: number | string) => {
     const year = date.getFullYear();
     const month = date.getMonth() + 1; // Months are zero-based, so add 1
     const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
     
     // Create the string date in the desired format (e.g., "YYYY-MM-DD")
-    const dateString = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
-    return date.toISOString();
+    const dateString = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}  ${hour}:${minute}`;
+    // return date.toISOString();
+    return dateString;
 }
 
 export const todayDate = () => {
@@ -24,4 +31,8 @@ export const todayDate = () => {
     const yyyy = today.getFullYear();
 
     return mm + '/' + dd + '/' + yyyy;
+}
+
+export const currenMillis = () => {
+    return Date.now()
 }

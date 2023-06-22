@@ -87,11 +87,8 @@ const RequestRawMaterial = () => {
 
         const strRawMatReq: string = RawMatRequestToString(rawMatRequest)
         console.log("StringrawMAt", strRawMatReq)
-        await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq)
+        await supplyChainContract?.addSupplyChain("rawMatRequest", strRawMatReq)
         
-        // delay(1000)
-        // await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq)    
-
         //add request to RawMaterialRequest 
         await rawMaterialRequestContract?.addRequest(
             rawMatRequest.id, rawMatRequest.name, rawMatRequest.count, rawMatRequest.date, rawMatRequest.manuId, rawMatRequest.supplierId, rawMatRequest.rawMaterialId, rawMatRequest.requestStatus, rawMatRequest.medSupplyChainAddr

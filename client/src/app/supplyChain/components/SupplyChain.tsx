@@ -7,13 +7,53 @@ import Spacer from '@/shared/ui/components/Spacer';
 import { trimAddressLong } from '@/shared/utils/trimAddressLong';
 import { BlockchainContext } from '@/store/context/BlockchainContext';
 import React, { useContext, useEffect, useState } from 'react';
+import RawMatRequest from './RawMatRequest';
+import { trimAddress } from '@/shared/utils/trimAddress';
+import { timeStampToString } from '@/shared/utils/DateConverter';
+import RawMatAccept from './RawMatAccept';
+import TransReq from './TransReq';
+import TransReqAccept from './TransReqAccept';
+import TransportInit from './TransportInit';
+import TransOnWay from './TransOnWay';
+import TransCompleted from './TransCompleted';
+import CreateMedicine from './CreateMedicine';
+import FdaReq from './FdaReq';
+import FdaAccept from './FdaAccept';
+import TransMedReq from './TransMedReq';
+import DistributorCollected from './DistributorCollected';
+import BoughtCst from './BoughtCst';
 
+
+/// "rawMaterialRequest" -> "rawMaterialAccept" -> "transportRequest" -> "transportReqAccept" -> "transportInit" -> "transportOnWay" -> "transportCompleted" -> "createMedicine" -> "fdaRequest" -> "fdaAccept" -> "transportRequest" -> "distributorMedicine" -> "buyMedicine"
+
+interface IContractData{
+    key?: string;
+    value?: string;
+}
+
+interface ISupplyChain{
+    rawMatRequest: string;
+    rawMatAccept: string;
+    transReq: string;
+    transReqAccept: string;
+    transportInit: string;
+    transOnWay: string;
+    transCompleted: string;
+    createMedicne: string;
+    fdaReq: string;
+    fdaAccept: string;
+    transReqMed: string;
+    distributorCollected: string;
+    boughtCst: string
+}
 
 const SupplyChain = () => {
-
-    const [selectedNav, setNav] = useState(0)
+    const [selectedNav, setNav] = useState<number | undefined>()
     const [addresses, setAddresses] = useState<string[]>([])
-    const [data, setData] = useState({})
+    const [data, setData] = useState<IContractData[]>([])
+    const [isAddressLoading, setAddressLoading] = useState(false)
+    const [supplyChainData, setSupplyChainData] = useState<ISupplyChain>()
+    const [dateTimes, setDateTimes] = useState<MObject>({})
 
     const {
         supplyChainFactoryContract,
@@ -22,60 +62,56 @@ const SupplyChain = () => {
 
 
     const getSupplyChainAddresses= async () => {
+        setAddressLoading(true)
         const addresses: string[] = await supplyChainFactoryContract?.getAllAddresses()
         console.log("addresses", addresses);
-        const copy = [...addresses]
-        const reversed = copy.reverse();
-        setAddresses(reversed)
+        if(addresses?.length){
+            const copy = [...addresses]
+            const reversed = copy.reverse();
+            setAddresses(reversed)
+        }
 
         if(getSupplyChainContract != undefined){
             addresses?.forEach( async (addr) => {
-                if( addr != '0xcB70b6b78eA04fDC6D4432f33A639Ab3266f1C48') return 
-
                 const resultContract = await getSupplyChainContract(addr)
                 const keys: string[] = await resultContract?.getSupplyChainKeys()
+                console.log(addr, keys)
+                
+                const timeStamp = await resultContract?.timeStamp();
 
-                console.log("keys = ", keys)
-
-
+                const milliTimeStamp = timeStamp.toNumber() * 1000
+                setDateTimes({...dateTimes, [addr]: timeStampToString(milliTimeStamp)})
                 let contractData = {}
-                await keys.forEach( async key => {
-                    const data = await resultContract?.getSupplyChain(key)
-                    console.log("data = ", data);
-                    contractData = {...contractData, [key]: data} 
-                    setData({...data, [addr]: contractData})
+                
+                for( const index in keys){
+                    const data = await resultContract?.getSupplyChain(keys[index])
+                    contractData = {...contractData, [keys[index]]: data}   
+                }
 
-                    console.log("addr ", addr)
-                    console.log("Main data = ", data);
-                    //console.log("Contract Data", contractData)
-                })
-
-                //console.log("Contract data = ", contractData);
+                const cData = {key: addr, value: contractData} as IContractData
+                const newData = data
+                newData.push(cData)
+                setData(newData)
             });
         }
+        setAddressLoading(false)
     }
 
-    const content1 = <div className='text-onPrimary-dark'>
-        <img className="h-16 w-auto" src={'supplier.svg'} alt="Supplier" />
-    </div>
-
-    const content2 = <div className='text-onPrimary-dark'>
-        <img className="h-16 w-auto" src={'distributor.svg'} alt="Supplier" />
-    </div>
-
-    const content3 = <div className='text-onPrimary-dark'>
-        <img className="h-16 w-auto" src={'manufacturer.svg'} alt="Supplier" />
-    </div>
-
-    const content4 = <div className='text-onPrimary-dark'>
-        <img className="h-16 w-auto" src={'customer.svg'} alt="Supplier" />
-    </div>
+    const onClickAddr = (addr: string, index: number) => {
+        setNav(index)
+        const result = (data.find(it => it.key == addr) as IContractData).value 
+        if(result == undefined) return
+        const supplyResult = result as unknown as ISupplyChain
+        console.log("Result", supplyResult)
+        setSupplyChainData(supplyResult)
+    }
 
     const LeftNavItems = 
         <>
             {addresses?.map((address) => {
                 const index = addresses.indexOf(address)
-                return <LeftItem isSelected = {selectedNav == index} label={trimAddressLong(address)} onClick={() => {setNav(index)}}/>
+                const dateTime = dateTimes[address]
+                return <LeftItem isSelected = {selectedNav == index} label={trimAddress(address)} dateTime ={dateTime} onClick={() => {onClickAddr(address, index)}}/>
             })}
         </>
 
@@ -86,30 +122,39 @@ const SupplyChain = () => {
     return(
         <>
             <div className='pt-16 flex'> 
-                <LeftNav children = {LeftNavItems} /> 
+                <LeftNav children = {LeftNavItems} isLoading={isAddressLoading}/> 
                 <div className='pl-16 pt-2'>
                     <div className="relative border-gray-400 dark:border-gray-700">                  
-                            <Li isActive={true} content={content1}/>
-                            <Li isActive={true} content={content2}/>
-                            <Li isActive= {false} content={content3}/>
-                            <Li isActive= {false} content={content4}/>
+                        <Li isActive={supplyChainData?.rawMatRequest != undefined ? true  : false} content={<RawMatRequest data = {supplyChainData?.rawMatRequest}/>}/>
+                        <Li isActive={supplyChainData?.rawMatAccept != undefined ? true  : false} content={<RawMatAccept data = {supplyChainData?.rawMatAccept}/>}/>
+                        <Li isActive={supplyChainData?.transReq != undefined ? true  : false} content={<TransReq data = {supplyChainData?.transReq}/>}/>
+                        <Li isActive={supplyChainData?.transReqAccept != undefined ? true  : false} content={<TransReqAccept data = {supplyChainData?.transReqAccept}/>}/>
+                        <Li isActive={supplyChainData?.transportInit != undefined ? true  : false} content={<TransportInit data = {supplyChainData?.transportInit}/>}/>
+                        <Li isActive={supplyChainData?.transOnWay != undefined ? true  : false} content={<TransOnWay data = {supplyChainData?.transOnWay}/>}/>
+                        <Li isActive={supplyChainData?.transCompleted != undefined ? true  : false} content={<TransCompleted data = {supplyChainData?.transCompleted}/>}/>
+                        <Li isActive={supplyChainData?.createMedicne != undefined ? true  : false} content={<CreateMedicine data = {supplyChainData?.createMedicne}/>}/>
+                        <Li isActive={supplyChainData?.fdaReq != undefined ? true  : false} content={<FdaReq data = {supplyChainData?.fdaReq}/>}/>
+                        <Li isActive={supplyChainData?.fdaAccept != undefined ? true  : false} content={<FdaAccept data = {supplyChainData?.fdaAccept}/>}/>
+                        <Li isActive={supplyChainData?.transReqMed != undefined ? true  : false} content={<TransMedReq data = {supplyChainData?.transReqMed}/>}/>
+                        <Li isActive={supplyChainData?.distributorCollected != undefined ? true  : false} content={<DistributorCollected data = {supplyChainData?.distributorCollected}/>}/>
+                        <Li isActive={supplyChainData?.boughtCst != undefined ? true  : false} content={<BoughtCst data = {supplyChainData?.boughtCst}/>}/>
                     </div>
                 </div>
             </div>
-            
         </>
     )
 }
 
 
 interface LeftItemProps{
-    label: string,
-    onClick: () => void,
-    isSelected: boolean
+    label: string;
+    dateTime: string;
+    onClick: () => void;
+    isSelected: boolean;
 }
 
 const LeftItem = ({
-    label, onClick, isSelected
+    label, onClick, isSelected, dateTime
 }: LeftItemProps) => {
     return(
         <>
@@ -117,7 +162,8 @@ const LeftItem = ({
               onClick={() => onClick()} 
               className={`${isSelected && ("bg-primary-dark")} p-2 flex items-center hover:bg-primary-dark rounded-md cursor-pointer w-auto`}
             > 
-              <p className="pl-2 select-none">{label}</p>
+              <p className="pl-2 select-none pr-4">{label}</p>
+              <p>{dateTime}</p>
             </div>
             <div className="h-2"></div>
         </>

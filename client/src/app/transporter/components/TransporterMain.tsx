@@ -7,6 +7,8 @@ import LeftNavItem from "@/shared/ui/components/LeftNavItem";
 import Spacer from "@/shared/ui/components/Spacer";
 import LeftNav from "@/shared/ui/components/LeftNav";
 import RightContainer from "@/shared/ui/components/RightContainer";
+import TransportRequest from "./TransportRequets";
+import TransportTranscations from "./TranportTransactions";
 
 const TransporterMain = () => {
     const currentDate = new Date().toDateString();
@@ -72,21 +74,17 @@ const TransporterMain = () => {
     
     const LeftNavItems = 
       <>
-        <LeftNavItem isSelected = {selectedNav == 0} label="Supplies" icon="Union.svg" onClick={() => {setNav(0)}}/>
-        <LeftNavItem isSelected={selectedNav == 1} label="Create Raw Material" icon="add-hexagon.svg" onClick={() => {setNav(1)}}/>
-        <LeftNavItem isSelected={selectedNav == 2} label="Transport Requests" icon="hand.svg" onClick={() => {setNav(2)}}/>
-        <LeftNavItem isSelected={selectedNav == 3} label="Requests" icon="wrap-text.svg" onClick={() => {setNav(3)}}/>
-      </>
+        <LeftNavItem isSelected = {selectedNav == 0} label="Transactions" icon="Union.svg" onClick={() => {setNav(0)}}/>
+        <LeftNavItem isSelected={selectedNav == 1} label="Transport Requests" icon="hand.svg" onClick={() => {setNav(1)}}/>
+      </> 
 
 
     const MainContent =
     <> 
       <div> 
         <p className="text-2xl text-onPrimary-dark/60"> 
-          {selectedNav == 0 && "0"}
-          {selectedNav == 1 && "1"}
-          {selectedNav == 2 && "2" }
-          {selectedNav == 3 && "3"}
+          {selectedNav == 0 && <TransportTranscations/>}
+          {selectedNav == 1 &&  <TransportRequest/> }
         </p>
       </div>
     </>

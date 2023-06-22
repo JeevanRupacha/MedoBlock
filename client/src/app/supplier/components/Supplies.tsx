@@ -6,11 +6,18 @@ import { trimAddress } from "@/shared/utils/trimAddress";
 import { BlockchainContext } from "@/store/context/BlockchainContext";
 import { UsersContext } from "@/store/context/UsersContext";
 import { count } from "console";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import RequestItem from "./RequestItem";
+import getRawMaterialRequests from "@/store/utils/getRawMaterialRequest";
+import { ethers } from "ethers";
 
 const Supplies = () => {
     const { users }  = useContext(UsersContext) as UserContextData;
+    const [contract, setContract] = useState<ethers.Contract>()
+
+    const strUser = localStorage.getItem('user')
+    const currentUser = JSON.parse(strUser?strUser:'') as IUser
+    
     const {
         rawMaterialRequests, 
         rawMaterialsContract,
@@ -30,7 +37,7 @@ const Supplies = () => {
                 { rawMaterialRequests?.map( request => {
                     const user = users.find((it) => it.id == request.manuId)
                     if(request.requestStatus == false) return
-                    if(request.supplierId != user?.id) return 
+                    if(request.supplierId != currentUser?.id) return 
                     return <RequestItem
                         id= {request.id}
                         status = {request.requestStatus}
