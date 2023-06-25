@@ -11,9 +11,11 @@ import BlockchainData from "@/shared/models/BlockchainData.model";
 import ITransportRequest from "@/shared/models/TransportRequest.model";
 import IUser from "@/shared/models/User.model";
 import DialogModal from "@/shared/ui/components/DialogModal";
+import { Empty } from "@/shared/ui/components/Empty";
 import Input from "@/shared/ui/components/Input";
 import LoaderSmall from "@/shared/ui/components/LoaderSmall";
-import { currenMillis, timeStampToString } from "@/shared/utils/DateConverter";
+import { currenMillis, timeStampToStr, timeStampToString } from "@/shared/utils/DateConverter";
+import { objectToChainString } from "@/shared/utils/objectToChainString";
 import { BlockchainContext } from "@/store/context/BlockchainContext";
 import { ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
@@ -84,12 +86,10 @@ const TransportRequest = () => {
             completedDate = "Not_yet"
         }
 
-        console.log("Completed DAte", completedDate)
-
         await transportRequestContract?.updateRequest(
             request.id,
             request.initDate,
-            "1687452687",
+            completedDate,
             request.transporterId,
             request.fromUserId,
             request.toUserId,
@@ -100,25 +100,62 @@ const TransportRequest = () => {
             request.medSupplyChainAddr
         )
 
-        const transportReqStr = JSON.stringify({...request, status: status}).replace(/"|"|{|}/g, '');
+        // const transportReqStr = JSON.stringify({...request, status: status}).replace(/"|"|{|}/g, '');
+        const cleanReq = {id: request.id, 
+            initDate: request.initDate,
+            completeDate: completedDate, 
+            transporterId: request.transporterId, 
+            fromUserId: request.fromUserId,
+            toUserId: request.toUserId,
+            status: status,
+            cost: request.cost,
+            fromLocation: request.fromLocation,
+            toLocation: request.toLocation,
+            medSupplyChainAddr: request.medSupplyChainAddr
+        } as ITransportRequest
+
+        const transportReqStr = objectToChainString(cleanReq)
 
         if(getSupplyChainContract == undefined) return alert(" No supply chain ")
         const supplyChainAddress = request.medSupplyChainAddr 
         const supplyChainContract = await getSupplyChainContract(supplyChainAddress) 
 
-        let supplyChainKey
-        if(status == 'ACCEPTED' ){
-            supplyChainKey = 'transReqAccept'
-        }else if(status == 'INIT'){
-            supplyChainKey = 'transportInit'
-        }else if(status == 'ON WAY'){
-            supplyChainKey = 'transOnWay'
-        }else if(status = 'COMPLETED'){
-            supplyChainKey = 'transCompleted'
-        }else{
-            supplyChainKey =  'nokey'
+        const miniData = request.transporterId.split(',')
+        //transporterId mixed with 'transporterId,rawMatId,medicineId,isMedicine'
+        let isMedicine
+
+        if(miniData.length > 1){
+            isMedicine = miniData[3]
         }
 
+        let supplyChainKey 
+        if(isMedicine === "true"){
+            if(status == 'ACCEPTED' ){
+                supplyChainKey = 'transMedReqAccept'
+            }else if(status == 'INIT'){
+                supplyChainKey = 'transportMedInit'
+            }else if(status == 'ON WAY'){
+                supplyChainKey = 'transMedOnWay'
+            }else if(status = 'COMPLETED'){
+                supplyChainKey = 'transMedCompleted'
+            }else{
+                supplyChainKey =  'nokey'
+            }
+        }else{
+            if(status == 'ACCEPTED' ){
+                supplyChainKey = 'transReqAccept'
+            }else if(status == 'INIT'){
+                supplyChainKey = 'transportInit'
+            }else if(status == 'ON WAY'){
+                supplyChainKey = 'transOnWay'
+            }else if(status = 'COMPLETED'){
+                supplyChainKey = 'transCompleted'
+            }else{
+                supplyChainKey =  'nokey'
+            }
+        }
+
+        //console.log("TransSTr", transportReqStr)
         await supplyChainContract?.addSupplyChain(supplyChainKey, transportReqStr) 
         setLoading(false)
     }
@@ -155,31 +192,20 @@ const TransportRequest = () => {
     const getTransportRequests = async (transportReqContract : ethers.Contract) => {
         try{
             setLoading(true)
-            console.log("TransRe Co", transportReqContract)
             const keys: string[] = await transportReqContract?.getTransportRequestKeys();
 
             let transportRequests: Array<ITransportRequest> = []    
 
             for (const key of keys) {
-                let transRequest = await transportReqContract?.getTransportRequest(key);
-                
-                if(transRequest == undefined) return 
-
-                transportRequests.push({
-                    id: transRequest.id,
-                    initDate: transRequest.initDate,
-                    completeDate: transRequest.completeDate,
-                    transporterId: transRequest.transporterId,
-                    fromUserId: transRequest.fromUserId,
-                    toUserId: transRequest.toUserId,
-                    status: transRequest.status,
-                    cost: transRequest.cost,
-                    fromLocation: transRequest.fromLocation,
-                    toLocation: transRequest.toLocation,
-                    medSupplyChainAddr: transRequest.medSupplyChainAddr
-                });
+                let transRequest = await transportReqContract?.getTransportRequest(key) as ITransportRequest;
+                if(transRequest == undefined) return    
+                transportRequests.push(transRequest)
               }
-            setRequests(transportRequests.reverse());
+
+            const reversed = transportRequests.reverse() 
+            setRequests(reversed);
+
+            setRequests(reversed.filter((req) => req.status != 'COMPLETED' && req.transporterId.split(',')[0] == user.id));
             setLoading(false)
         }catch(error){
             setLoading(false)
@@ -200,8 +226,8 @@ const TransportRequest = () => {
         />
 
         <div className='flex pt-4 gap-4'>
-            <div onClick={() => setShowCostDialog(false)} className='bg-red-400 px-4 py-2 rounded-full w-full cursor-pointer hover:bg-red-400/50'>Cancel</div>
-            <div onClick={() => acceptReq(request)} className='bg-button px-4 py-2 rounded-full w-full cursor-pointer hover:bg-button/50'>Accept</div>
+            <div onClick={() => setShowCostDialog(false)} className='bg-red-400 px-4 py-2 rounded-lg w-full cursor-pointer hover:bg-red-400/50'>Cancel</div>
+            <div onClick={() => acceptReq(request)} className='bg-button px-4 py-2 rounded-lg w-full cursor-pointer hover:bg-button/50'>Accept</div>
         </div>
     </div>
 
@@ -224,33 +250,36 @@ const TransportRequest = () => {
             {requests?.map( req => {
                 // if(req.transporterId != user.id) return  just testing 
                
-                let initDateStr = ''
+                console.log("REQ", req)
+
+                ///string,string,string,string,string,string,string,string,string,address): 63562a4e-044c-4940-b26b-78713f1d07b1,1687668253365,Not Yet,ZsDkAMZKqvbEs6TONNKwbOA4lkl1,null,2da8d28f-249b-410f-b6af-fbf1f54819d9,true,ZsDkAMZKqvbEs6TONNKwbOA4lkl1,ZsDkAMZKqvbEs6TONNKwbOA4lkl1,REQUESTED,0,La: -19.78892, Lo: -40.46657,La: 25.13563, Lo: 165.49775,0xAF6d9e9fEe9b8Ed3A51C8aE28f0076F51c9Ff4d2
+                let initDateStr = timeStampToStr(req.initDate)
+                let completeDateStr = timeStampToStr(parseInt(req.completeDate) * 1000)
                 
-                try{
-                    const millis = parseInt(req.initDate) * 1000
-                    if(Object.is(millis, NaN)){
-                        initDateStr = ''
-                    }else{
-                        initDateStr = timeStampToString(millis)
-                    }
-                }catch(error){
-                    console.log(error)
+                const miniData = req.transporterId.split(',')
+                const transporterId = miniData[0]
+                let rawMatId = ''
+                let medicineId = ''
+                let isMedicine
+
+                if(miniData.length > 1){
+                    rawMatId = miniData[1]
+                    medicineId = miniData[2]
+                    isMedicine = miniData[3]
                 }
 
-                let completeDateStr = ''
-                try{
-                    const millis = parseInt(req.completeDate) * 1000
-                    if(Object.is(millis, NaN)){
-                        completeDateStr = ''
-                    }else{
-                        completeDateStr = timeStampToString(millis)
-                    }
-                }catch(error){
-                    console.log(error)
+                let fromUserType = ''
+                let toUserType = ''
+
+                console.log("isMEd", isMedicine + req.medSupplyChainAddr)
+
+                if(isMedicine === "true"){
+                    fromUserType = 'Manufacturer'
+                    toUserType = 'Distributor'
+                }else{
+                    fromUserType = 'Supplier'
+                    toUserType = 'Manufacturer'
                 }
-                
-                console.log("CompleteStr ", completeDateStr)
-                console.log("CompleteDare ", req.completeDate)
 
                 return <TransportRequestItem
                     transAddress = {req.medSupplyChainAddr}
@@ -262,10 +291,10 @@ const TransportRequest = () => {
                     cost = {req.cost}
                     fromUserId={ req.fromUserId}
                     toUserId={req.toUserId}
-                    transporterId = {req.transporterId}
+                    transporterId = {transporterId}
                     showCheck = {true}
-                    fromUserType="Supplier"
-                    toUserType="Manufacturer"
+                    fromUserType= {fromUserType}
+                    toUserType= {toUserType}
                     onAccept={() => {
                         setRequest(req)
                         setShowCostDialog(true)
@@ -276,6 +305,8 @@ const TransportRequest = () => {
                      }}
                 />
             })} 
+
+            {(!requests?.length && !loading) && <Empty/>}
 
             { loading && <LoaderSmall/> }
 

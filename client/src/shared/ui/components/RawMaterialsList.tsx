@@ -1,5 +1,8 @@
 import IRawMaterial from "@/shared/models/RawMaterial.model";
 import RawMaterialCard from "@/app/supplier/components/RawMaterialCard";
+import { useContext } from "react";
+import { UsersContext } from "@/store/context/UsersContext";
+import UserContextData from "@/shared/models/UserContextData.model";
 
 interface RawMaterialsListProps{
     rawMaterials?: IRawMaterial[],
@@ -8,11 +11,15 @@ interface RawMaterialsListProps{
 }
 
 const RawMaterialsList = ({rawMaterials, clickable, onClick}: RawMaterialsListProps) => {
+    const { currentUser } = useContext(UsersContext) as UserContextData
+
     return(
         <>
             <div className="grid grid-cols-2 gap-10"> 
-                { rawMaterials?.map( rawMat => ( 
-                    <RawMaterialCard
+                { rawMaterials?.map( rawMat => {
+                    if(currentUser?.id != rawMat.supplierId) return //filtering 
+
+                    return <RawMaterialCard
                         rawMatID={rawMat.id}
                         description= { rawMat.description }
                         name= {rawMat.name}
@@ -24,7 +31,7 @@ const RawMaterialsList = ({rawMaterials, clickable, onClick}: RawMaterialsListPr
                         clickable = {clickable}
                         onClick={() => onClick(rawMat)}
                     />
-                ))} 
+                })} 
             </div>
         </>
     )

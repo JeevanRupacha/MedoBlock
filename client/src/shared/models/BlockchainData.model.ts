@@ -14,4 +14,5 @@ export default interface BlockchainData{
     supplyChainFactoryContract?: ethers.Contract,
     rawMaterialRequestContract?: ethers.Contract,
     transportRequestContract?: ethers.Contract,
+    medicinesContract?: ethers.Contract,
 }

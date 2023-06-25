@@ -4,7 +4,7 @@ enum UserRole{
     CARRIER = "Carrier",
     RETAILER = "Retailer",
     CUSTOMER = "Customer",
-    FDA_ADMIN= "FDA Admin",
+    FDA_ADMIN= "FDA_Admin",
     NONE = "None"
 };
 

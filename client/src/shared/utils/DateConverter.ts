@@ -24,6 +24,21 @@ export const timeStampToString = (timeStamp: number | string) => {
     return dateString;
 }
 
+export const timeStampToStr = (timeStamp: string | number) => {
+    let result = ''
+    try{
+        const millis = parseInt(timeStamp.toString()) 
+        if(Object.is(millis, NaN)){
+            result = ''
+        }else{
+            result = timeStampToString(millis)
+        }
+    }catch(error){
+        console.log(error)
+    }
+    return result 
+}
+
 export const todayDate = () => {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');

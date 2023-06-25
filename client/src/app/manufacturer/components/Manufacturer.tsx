@@ -9,6 +9,12 @@ import LeftNav from "@/shared/ui/components/LeftNav";
 import LeftNavItem from "@/shared/ui/components/LeftNavItem";
 import RightContainer from "@/shared/ui/components/RightContainer";
 import RequestRawMaterial from "./RequestRawMaterial";
+import CreateMedicine from "./CreateMedicine";
+import ApplyFda from "./ApplyFda";
+import Medicines from "./Medicines";
+import FdaRequests from "./FdaRequests";
+import ManuTransctions from "./ManuTransactions";
+
 
 enum TabType{
     HISTORY,
@@ -86,12 +92,12 @@ const Manufacturer = () => {
     <>
       <div> 
         <p className="text-2xl text-onPrimary-dark/60"> 
-          {selectedNav == 0 && "Transitions"}
-          {selectedNav == 1 && "Create Medicine"}
-          {selectedNav == 2 && "Apply FDA"}
-          {selectedNav == 3 && "FDA Request"}
+          {selectedNav == 0 && <ManuTransctions/>}
+          {selectedNav == 1 && <CreateMedicine/>}
+          {selectedNav == 2 && <ApplyFda/>}
+          {selectedNav == 3 && <FdaRequests/> }
           {selectedNav == 4 && <RequestRawMaterial/>}
-          {selectedNav == 5 && "Medicines"}
+          {selectedNav == 5 && <Medicines/>}
         </p>
       </div>
     </>

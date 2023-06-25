@@ -4,7 +4,7 @@ import React, { useEffect, useState} from 'react';
 import { ethers } from 'ethers';
 import InitBlockchain from '@/blockchain/InitBlockchain';
 
-import {rawMaterialRequestABI, rawMaterialsABI, supplyChainABI, supplyChainFactoryABI, transportRequestABI} from '../../shared/utils/abis';
+import {medicinesABI, rawMaterialRequestABI, rawMaterialsABI, supplyChainABI, supplyChainFactoryABI, transportRequestABI} from '../../shared/utils/abis';
 import BlockchainData from '@/shared/models/BlockchainData.model';
 import IRawMaterial from '@/shared/models/RawMaterial.model';
 import { compare } from '@/shared/utils/compare';
@@ -13,6 +13,7 @@ import IRawMaterialRequest from '@/shared/models/RawMaterialRequest.model';
 import ITransportRequest from '@/shared/models/TransportRequest.model';
 
 import { 
+    MEDICINES_ADDRESS,
     RAW_MATERIALS_ADDRESS, 
     RAW_MATERIAL_REQUEST_ADDRESS, 
     SUPPLY_CHAIN_FACTORY_ADDRESS, 
@@ -67,6 +68,14 @@ const getTransportRequestContract = () => {
     return new ethers.Contract(TRANSPORT_REQUEST_ADDRESS, transportRequestABI, signer);
 }
 
+const getMedicinesContract = () => {
+    if(!ethereum) return;
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    return new ethers.Contract(MEDICINES_ADDRESS, medicinesABI, signer);
+}
+
+
 interface BlockchainProviderProps{
     children: React.ReactNode
 }
@@ -80,6 +89,7 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
     const [supplyChainFactoryContract, setSupplyChainFactoryContract] = useState<ethers.Contract>()
     const [rawMaterialRequestContract, setRawMaterialRequestContract] = useState<ethers.Contract>()
     const [transportReqContract, setTransportReqContract] = useState<ethers.Contract>()
+    const [medicinesContract, setMedicinesContract] = useState<ethers.Contract>()
 
     const [rawMaterials, setRawMaterials] = useState<IRawMaterial[]>()
     const [rawMatRequests, setRawMatRequests] = useState<IRawMaterialRequest[]>()
@@ -176,7 +186,7 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
                 //rawMatResult = rawMatResult.sort(compare)
               }
              
-            setRawMatRequests(rawMatReqResult);
+            setRawMatRequests(rawMatReqResult.reverse());
         }catch(error){
             console.log(error)
         }
@@ -224,6 +234,7 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
         setSupplyChainFactoryContract(getSupplyChainFactoryContract());
         setRawMaterialRequestContract(getRawMaterialRequestContract());
         setTransportReqContract(getTransportRequestContract());
+        setMedicinesContract(getMedicinesContract());
     }, [])
 
     useEffect(() => {
@@ -250,7 +261,8 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
                rawMaterialsContract: rawMaterialsContract,
                supplyChainFactoryContract: supplyChainFactoryContract,
                rawMaterialRequestContract: rawMaterialRequestContract,
-               transportRequestContract: transportReqContract
+               transportRequestContract: transportReqContract,
+               medicinesContract: medicinesContract
            })
     }, [currentAccount,
         rawMaterialsContract,
@@ -258,7 +270,8 @@ export const BlockchainProvider = ({children}: BlockchainProviderProps) => {
         rawMatRequests,
         supplyChainFactoryContract, 
         rawMaterialRequestContract,
-        transportReqContract
+        transportReqContract,
+        medicinesContract
     ])
 
     return (

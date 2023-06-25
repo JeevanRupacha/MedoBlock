@@ -42,13 +42,8 @@ const CreateRawMaterial = () => {
     const handleSubmit = async () => {
         //todo create Medsupplychain contract 
         // update Supplier contract 
-        console.log(formData);
-        console.log("walletAddress Raw", walletAddress)
-        console.log("raw contract", rawMaterialsContract)
 
         setLoading(true);
-
-       
         
         await rawMaterialsContract?.addRawMaterial(
             uuidv4(),
@@ -71,57 +66,6 @@ const CreateRawMaterial = () => {
         const filtered = rawMaterials?.filter((value)=> value.supplierId == user.id)
         setFilteredRawMaterials(filtered)
     }, [rawMaterials])
-
-    // function compare( a: IRawMaterial, b: IRawMaterial ) {
-    //     if ( a.timeStamp > b.timeStamp ){
-    //       return -1;
-    //     }
-    //     if ( a.timeStamp < b.timeStamp ){
-    //       return 1;
-    //     }
-    //     return 0;
-    //   }
-      
-
-    // const getRawMaterials = async () => {
-    //     try{
-    //         setFecting(true)
-    //         const keys: string[] = await rawMaterialsContract?.getRawMaterialsKeys();
-
-    //         let rawMatResult: Array<IRawMaterial> = []    
-
-    //         for (const key of keys) {
-    //             let rawMaterial = await rawMaterialsContract?.getRawMaterial(key);
-
-    //             if(rawMaterial.supplierId == user.id){
-    //                 const milliTimeStamp = rawMaterial.timeStamp.toNumber() * 1000
-    //                 rawMatResult.push({
-    //                     id: rawMaterial.id,
-    //                     name: rawMaterial.name,
-    //                     description: rawMaterial.description,
-    //                     timeStamp: timeStampToString(milliTimeStamp),
-    //                     supplierId: rawMaterial.supplierId,
-    //                     amount: rawMaterial.amount,
-    //                     price: rawMaterial.price,
-    //                     unit: rawMaterial.unit 
-    //                   });
-    //             }
-
-    //             rawMatResult = rawMatResult.sort(compare)
-    //           }
-              
-    //         //setRawMaterials(rawMatResult);
-    //         setFecting(false)
-    //     }catch(error){
-    //         console.log(error)
-    //     }
-    // }
-
-    // useEffect(( ) =>{
-    //     setFecting(true)
-    //     getRawMaterials()
-    //     setFecting(false)
-    // }, [])
     
     return(
         <>

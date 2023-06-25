@@ -43,8 +43,8 @@ interface ISupplyChain{
     fdaReq: string;
     fdaAccept: string;
     transReqMed: string;
-    distributorCollected: string;
-    boughtCst: string
+    transMedCompleted: string;
+    sellMedicine: string
 }
 
 const SupplyChain = () => {
@@ -99,7 +99,7 @@ const SupplyChain = () => {
 
     const onClickAddr = (addr: string, index: number) => {
         setNav(index)
-        const result = (data.find(it => it.key == addr) as IContractData).value 
+        const result = (data.find(it => it.key == addr) as IContractData)?.value 
         if(result == undefined) return
         const supplyResult = result as unknown as ISupplyChain
         console.log("Result", supplyResult)
@@ -119,6 +119,10 @@ const SupplyChain = () => {
          getSupplyChainAddresses();   
     }, [supplyChainFactoryContract])
 
+    useEffect(() => {
+        console.log("SupplChainData", supplyChainData)
+    },[supplyChainData])
+
     return(
         <>
             <div className='pt-16 flex'> 
@@ -135,9 +139,21 @@ const SupplyChain = () => {
                         <Li isActive={supplyChainData?.createMedicne != undefined ? true  : false} content={<CreateMedicine data = {supplyChainData?.createMedicne}/>}/>
                         <Li isActive={supplyChainData?.fdaReq != undefined ? true  : false} content={<FdaReq data = {supplyChainData?.fdaReq}/>}/>
                         <Li isActive={supplyChainData?.fdaAccept != undefined ? true  : false} content={<FdaAccept data = {supplyChainData?.fdaAccept}/>}/>
+                        {/* fdaReject */}
                         <Li isActive={supplyChainData?.transReqMed != undefined ? true  : false} content={<TransMedReq data = {supplyChainData?.transReqMed}/>}/>
-                        <Li isActive={supplyChainData?.distributorCollected != undefined ? true  : false} content={<DistributorCollected data = {supplyChainData?.distributorCollected}/>}/>
-                        <Li isActive={supplyChainData?.boughtCst != undefined ? true  : false} content={<BoughtCst data = {supplyChainData?.boughtCst}/>}/>
+                        <Li isActive={supplyChainData?.transMedCompleted != undefined ? true  : false} content={<DistributorCollected data = {supplyChainData?.transMedCompleted}/>}/>
+                        <Li isActive={supplyChainData?.sellMedicine != undefined ? true  : false} content={<BoughtCst data = {supplyChainData?.sellMedicine}/>}/>
+                    
+                    
+                        <div className='pt-2'>
+                        <span className={`flex absolute -left-3 justify-center items-center w-6 h-6 bg-blue-200 rounded-full ring-8 ${true? 'ring-white': 'ring-green-50/30'}  dark:ring-gray-900 dark:bg-blue-900`}>
+                            {/* <img className="rounded-full shadow-lg" src="https://via.placeholder.com/150/0000FF/" alt="Bonnie image"/> */}
+                            <div className={`w-8 h-6 ${true ? 'bg-button' : 'bg-red-300'} rounded-full`}> </div>
+                        </span>
+                        <div className={`w-[1px] h-full mt-8 ${true ? 'border-white': 'border-gray-400/50'} border-l-2 border-dotted`}></div>
+                        </div> 
+
+                        <div className='h-10'></div>  
                     </div>
                 </div>
             </div>
@@ -163,7 +179,7 @@ const LeftItem = ({
               className={`${isSelected && ("bg-primary-dark")} p-2 flex items-center hover:bg-primary-dark rounded-md cursor-pointer w-auto`}
             > 
               <p className="pl-2 select-none pr-4">{label}</p>
-              <p>{dateTime}</p>
+              {/* <p>{dateTime}</p> */}
             </div>
             <div className="h-2"></div>
         </>

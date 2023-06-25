@@ -18,9 +18,7 @@ struct TransportEntity{
     string id;
     string initDate;
     string completeDate;
-    address transporter;
-    address fromAddress;
-    address toAddress;
+    string transporterId;
     string fromUserId;
     string toUserId;
     string status;
@@ -33,11 +31,11 @@ struct TransportEntity{
 struct MedicineEntity{
     string id;
     string name;
+    string description;
     string manuId;
-    string manuDate;
+    uint manuDate;
     string expDate;
-    bool fdaStatus;
-    string manuLocation;
+    string fdaStatus;
     string fdaAdminId;
     string price;
     uint count;

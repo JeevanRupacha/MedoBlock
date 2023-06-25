@@ -21,4 +21,10 @@ contract MedSupplyChainFactory{
     function getAllAddresses() view public returns( address[] memory){
         return medSupplyChainAddresses;
     }
+
+    function getLastSupplyChainAddr() view public returns(address){
+        return medSupplyChainAddresses[supplyChainCount - 1]; // array index start 0 
+    }
 }
+
+//0x31cC65373d27c3C93277a00CF6f48e04Bec4BA5e

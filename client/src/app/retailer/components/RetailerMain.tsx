@@ -1,135 +1,185 @@
 "use client";
 
-import React from "react";
-import RetailerCard from "./RetailerCard";
-import AddButton from "@/shared/ui/components/AddButton";
+import MedicineCard from "@/app/manufacturer/components/MedicineCard";
+import BlockchainData from "@/shared/models/BlockchainData.model";
+import { IMedicine } from "@/shared/models/IMedicine.model";
+import ITransportRequest from "@/shared/models/TransportRequest.model";
+import IUser from "@/shared/models/User.model";
+import UserContextData from "@/shared/models/UserContextData.model";
+import DialogModal from "@/shared/ui/components/DialogModal";
+import { Empty } from "@/shared/ui/components/Empty";
+import LoaderSmall from "@/shared/ui/components/LoaderSmall";
+import { timeStampToString } from "@/shared/utils/DateConverter";
+import { objectToChainString } from "@/shared/utils/objectToChainString";
+import { BlockchainContext } from "@/store/context/BlockchainContext";
+import { UsersContext } from "@/store/context/UsersContext";
+import React, { useContext, useEffect, useState } from "react";
 
 const RetailerMain = () => {
+  const [isLoading, setLoading] = useState(false)
+  const [medicines, setMedicines] = useState<IMedicine[]>([])
+  const [medicine, setMedicine] = useState<IMedicine>()
+  const [showDialog, setShowDialog] = useState(false)
+  const [selectedTransporter, setTransporter] = useState<IUser>()
+  const [medicineIds, setMedicineIds] = useState<string[]>([])
 
-    const fdaApproved1 = true 
-  
-    const date1 = "2023-05-05";
-    const date2 = "2023-05-05";
-    const date3 = "2023-05-05";
-    const date4 = "2023-05-05";
-    const date5 = "2023-05-05";
-    const date6 = "2023-05-05";
-  
-    const totalUnit1 = 12 
-  
-    const price1 = "$12";
-    const price2 = "$12";
-    const price3 = "$12";
-    const price4 = "$12";
-    const price5 = "$12";
-    const price6 = "$12";
-  
-    const name1 = "paracetamol";
-    const name2 = "paracetamol";
-    const name3 = "paracetamol";
-    const name4 = "paracetamol";
-    const name5 = "paracetamol";
-    const name6 = "paracetamol";
-  
-    const recieverid1 = "axcf3bj343hsx3cc2n34cv";
-    const recieverid2 = "axcf3bj343hsx3cc2n34cv";
-    const recieverid3 = "axcf3bj343hsx3cc2n34cv";
-    const recieverid4 = "axcf3bj343hsx3cc2n34cv";
-    const recieverid5 = "axcf3bj343hsx3cc2n34cv";
-    const recieverid6 = "axcf3bj343hsx3cc2n34cv";
-  
-    const senderid1 = "axcf3bj343hsxcccn34nm";
-    const senderid2 = "axcf3bj343hsxcccn34nm";
-    const senderid3 = "axcf3bj343hsxcccn34nm";
-    const senderid4 = "axcf3bj343hsxcccn34nm";
-    const senderid5 = "axcf3bj343hsxcccn34nm";
-    const senderid6 = "axcf3bj343hsxcccn34nm";
-  
-    const productId1 = "axcf3bj343hsxcccn34nm";
-    const productId2 = "axcf3bj343hsxcccn34nm";
-    const productId3 = "axcf3bj343hsxcccn34nm";
-    const productId4 = "axcf3bj343hsxcccn34nm";
-    const productId5 = "axcf3bj343hsxcccn34nm";
-    const productId6 = "axcf3bj343hsxcccn34nm";
-  
+  const { users, currentUser } = useContext(UsersContext) as UserContextData
+  const { 
+      medicinesContract,
+      getSupplyChainContract,
+      transportRequestContract
+  } = useContext(BlockchainContext) as BlockchainData;
 
-    return(
-        <>
-        <div className="min-h-screen">
-            <AddButton text="Add sold medicine" onClick={() => {}} imageSrc="manufacturer.svg"/>
+  const getMedicines = async () => {
+      setLoading(true)
+      const keys = await medicinesContract?.getMedicinesKeys()
+      
+      let resultMedicines = []
+      for(const key of keys){
+           const result = await medicinesContract?.getMedicine(key)
+           console.log("Result ", result)
+           resultMedicines.push(result)
+      }
+          
+      const medResult = resultMedicines.reverse()
+      setMedicines(medResult) 
+      setLoading(false)
+  }
 
-        <div className="pt-12 flex justify-center ">
-            <div className="text-text-color font-semibold w-[200px] mt-2 border-b-2 border-line text-xl text-center ">
-                <p>Sell History</p>
+  const filterMedicines = async () => {
+    setLoading(true)
+    //get all transports 
+    let filteredMedicineIds: string[] = []
+    const transportKeys = await transportRequestContract?.getTransportRequestKeys()
+    for(const key of transportKeys){
+      const result = await transportRequestContract?.getTransportRequest(key) as ITransportRequest
+
+      //transporterId mixed with 'transporterId,rawMatId,medicineId,isMedicine'
+      const miniData = result.transporterId.split(',')
+      let medicineId = ''
+      if(miniData.length > 1){
+        medicineId = miniData[2] 
+        const isTransCompleted = result.status == 'COMPLETED'
+        if(isTransCompleted && result.toUserId == currentUser?.id){
+        filteredMedicineIds.push(medicineId)
+        }
+      }
+    }
+
+    setMedicineIds(filteredMedicineIds)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    filterMedicines()
+  }, [medicines])
+
+  const sellMedicine = async (toUser: IUser) => {
+      setLoading(true)
+
+      //todo user is not updated to going to buy 
+      if(medicine == undefined) return
+      try{
+          if(getSupplyChainContract != undefined){
+              const supplyChainContract = await getSupplyChainContract(medicine.medSupplyChainAddr)
+
+              const cleanMed = {
+                id: medicine.id,
+                name: medicine.name,
+                description: medicine.description,
+                manuId: medicine.manuId,
+                manuDate: medicine.manuDate,
+                expDate: medicine.expDate,
+                fdaStatus: medicine.fdaStatus,
+                fdaAdminId: medicine.fdaAdminId,
+                price: medicine.price,
+                count: medicine.count,
+                medSupplyChainAddr: medicine.medSupplyChainAddr
+              } as IMedicine
+
+              const medicineStr = objectToChainString(cleanMed)
+              console.log("MedStr", medicineStr)
+              await supplyChainContract?.addSupplyChain("sellMedicine", medicineStr) 
+          }
+          setShowDialog(false)
+      }catch(error){
+          console.log(error)    
+          setLoading(false)
+          setShowDialog(false)
+      }
+      setLoading(false)
+  }
+
+  const dialogContent = <>
+  <div className='w-96 bg-onPrimary-light/70 rounded-xl p-4'>
+    <div>
+        <p className="text-onPrimary-dark text-xl pb-8">Sell Medicine</p>
+        {users.map( user => {
+            return <div>
+                <div onClick={() => sellMedicine(user)} className="flex items-center pt-2 bg-onPrimary-light/70 rounded-md my-2 py-2 px-2 cursor-pointer hover:opacity-50">
+                    <img className="w-8 rounded-full" src={user.imageUrl} alt="img" />
+                    <p className="pl-2 text-onSecondary-dark">{user.name}</p>
+                </div>
             </div>
-        </div>
-
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 sm:ml-4 lg:ml-4 xl:ml-36 mt-10">
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date1}
-        to={recieverid1}
-        from={senderid1}
-        productId={productId1}
-        totalUnit={totalUnit1}
-        price={price1}
-        name={name1}
-      />
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date2}
-        to={recieverid2}
-        from={senderid2}
-        productId={productId2}
-        totalUnit={totalUnit1}
-        price={price2}
-        name={name2}
-      />
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date3}
-        to={recieverid3}
-        from={senderid3}
-        productId={productId3}
-        totalUnit={totalUnit1}
-        price={price3}
-        name={name3}
-      />
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date4}
-        to={recieverid4}
-        from={senderid4}
-        productId={productId4}
-        totalUnit={totalUnit1}
-        price={price4}
-        name={name4}
-      />
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date5}
-        to={recieverid5}
-        from={senderid5}
-        productId={productId5}
-        totalUnit={totalUnit1}
-        price={price5}
-        name={name5}
-      />
-      <RetailerCard
-        fdaApproved={fdaApproved1}
-        date={date6}
-        to={recieverid6}
-        from={senderid6}
-        productId={productId6}
-        totalUnit={totalUnit1}
-        price={price6}
-        name={name6}
-      />
+        })}
     </div>
-    </div>
-    </>
-    )
+  </div>
+  </>
+
+  useEffect(() => {
+      getMedicines()
+  }, [medicinesContract])
+  
+  return(
+      <div className="text-onPrimary-dark/60">
+          <div className="mb-8 mt-20 text-2xl"> Medicines </div>
+
+          <div className="grid grid-cols-3 gap-10">
+              { medicines?.map( (medicine) => {
+
+                  if(!medicineIds.includes(medicine.id)) return 
+
+                  let manuDate = ''
+                  let expDate = ''
+                                  
+                  try{
+                      const millis = parseInt(medicine.manuDate.toString()) * 1000
+                      if(Object.is(millis, NaN)){
+                          manuDate = ''
+                      }else{
+                          manuDate = timeStampToString(millis)
+                      }
+                  }catch(error){
+                      console.log(error)
+                  }
+
+                  return <MedicineCard
+                      name= { medicine.name }
+                      price= {parseInt(medicine.price)}
+                      userId={ medicine.manuId }
+                      count = { medicine.count.toString() }
+                      address={ medicine.medSupplyChainAddr}
+                      description={ medicine.description}
+                      creatDate={ manuDate}
+                      expDate={ medicine.expDate }
+                      fdaStatus={ medicine.fdaStatus }
+                      onClick={() => {
+                          setMedicine(medicine)
+                          setShowDialog(true)
+                      }}
+                  />
+              })}
+          </div>
+
+          {medicines.length == 0 && !isLoading && <Empty/>}    
+
+          <DialogModal open = { showDialog} toggle={() => setShowDialog(!showDialog)} content = {dialogContent}/>    
+
+          { isLoading && 
+              <div className="w-full h-full flex justify-center items-center"> <LoaderSmall/> </div>
+          }
+      </div>
+  )
 }
 
 export default RetailerMain;

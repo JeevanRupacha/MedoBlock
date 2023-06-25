@@ -28,8 +28,6 @@ const Requests = () => {
 
     const {
         rawMaterialRequests, 
-        rawMaterialsContract,
-        supplyChainFactoryContract,
         getSupplyChainContract,
         rawMaterialRequestContract,
         transportRequestContract
@@ -44,17 +42,19 @@ const Requests = () => {
                 request?.id, request?.name, request?.count, request?.date, request?.manuId, request?.supplierId, request?.rawMaterialId,"true",request?.medSupplyChainAddr
             )
     
-            if(getSupplyChainContract != undefined){
-                const supplyChainContract = getSupplyChainContract(request.medSupplyChainAddr)
-                const strRawMatReq = RawMatRequestToString(request)
-                await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq) 
-            }
+            // if(getSupplyChainContract != undefined){
+            //     const supplyChainContract = getSupplyChainContract(request.medSupplyChainAddr)
+            //     const strRawMatReq = RawMatRequestToString(request)
+            //     await supplyChainContract?.addSupplyChain("rawMaterialRequest", strRawMatReq) 
+            // }
     
+            //transporterId mixed with 'transporterId,rawMatId,medicineId,isMedicine'
+            const modTransporterId = `${user.id},${request.id},null,false`
             const transport = {
                 id: uuidv4(), 
                 initDate: Date.now().toString(),
                 completedDate: 'Not Yet', 
-                transporterId: user.id, 
+                transporterId: modTransporterId.toString(), 
                 fromUserId: currentUser.id, 
                 toUserId: request.manuId, 
                 status: 'REQUESTED', 

@@ -16,8 +16,13 @@ export const UsersProvider = ({children}: UsersProviderProps) => {
 
     const getUsers = async () => {
         const result = await getAllUsers();
+
+        const userString = localStorage.getItem('user')
+        const user = JSON.parse(userString?userString:'')
+
         setData({
-            users: result
+            users: result,
+            currentUser: user
         } as UserContextData);
     }
     

@@ -16,6 +16,7 @@ import { todayDate } from '@/shared/utils/DateConverter';
 import { RawMatRequestToString } from '@/shared/utils/Converter';
 import Loader from '@/shared/ui/components/Loader';
 import LoaderSmall from '@/shared/ui/components/LoaderSmall';
+import { objectToChainString } from '@/shared/utils/objectToChainString';
 
 const RequestRawMaterial = () => {
     const [isLoading, setLoading] = useState(false)
@@ -28,9 +29,7 @@ const RequestRawMaterial = () => {
     const user = JSON.parse(userString?userString:'')
 
     const { 
-        walletAddress,
         rawMaterials,
-        rawMaterialsContract,
         supplyChainFactoryContract,
         getSupplyChainContract,
         rawMaterialRequestContract
@@ -85,7 +84,7 @@ const RequestRawMaterial = () => {
             medSupplyChainAddr: address 
         } as IRawMaterialRequest
 
-        const strRawMatReq: string = RawMatRequestToString(rawMatRequest)
+        const strRawMatReq: string = objectToChainString(rawMatRequest)
         console.log("StringrawMAt", strRawMatReq)
         await supplyChainContract?.addSupplyChain("rawMatRequest", strRawMatReq)
         
