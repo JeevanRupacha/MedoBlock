@@ -14,14 +14,15 @@ import { RawMatRequestToString } from "@/shared/utils/Converter";
 import { randomUUID } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import ITransportRequest from "@/shared/models/TransportRequest.model";
+import Input from "@/shared/ui/components/Input";
 
 const Requests = () => {
     const { users }  = useContext(UsersContext) as UserContextData;
     const [showDialog, setShowDialog] = useState(false)
     const [request, setRequest]  = useState<IRawMaterialRequest>()
     const [loadig, setLoading] = useState(false)
-    const [fromLocation, setFromLocation] = useState('La: -19.78892, Lo: -40.46657')
-    const [toLocation, setToLocation] = useState('La: 25.13563, Lo: 165.49775')
+    const [fromLocation, setFromLocation] = useState('')
+    const [toLocation, setToLocation] = useState('')
 
     const strUser = localStorage.getItem('user')
     const currentUser = JSON.parse(strUser?strUser:'') as IUser
@@ -63,8 +64,6 @@ const Requests = () => {
                 toLocation: toLocation, 
                 medSupplyChainAddr: request.medSupplyChainAddr
             }
-
-            console.log("Transport", transport)
     
             await transportRequestContract?.addRequest(
                 transport.id,
@@ -87,6 +86,9 @@ const Requests = () => {
 
             await supplyChainContract?.addSupplyChain("rawMatAccept", requestStr) 
             await supplyChainContract?.addSupplyChain("transReq", transportReqStr) 
+
+            setFromLocation('')
+            setToLocation('')
         }catch(error){
             console.log(error)    
             setLoading(false)
@@ -107,15 +109,38 @@ const Requests = () => {
 
     const dialogContent = <>
     <div className='w-96 bg-onPrimary-light/70 rounded-xl p-4'>
-        <p className="text-onPrimary-dark text-xl pb-8">Select a Transporter</p>
+
+    <div>
+        <p className="text-onPrimary-dark text-xl pb-2">Enter Location</p>
+        <Input 
+            placeholder="From Location"
+            name="fromLocation"
+            type = "text"
+            value={fromLocation}
+            handleChange={(e) => setFromLocation(e.target.value)}
+        />
+
+        <Input 
+            placeholder="To Location"
+            name="toLocation"
+            type = "text"
+            value={toLocation}
+            handleChange={(e) => setToLocation(e.target.value)}
+        />
+    </div>
+    <div>
+        <p className="text-onPrimary-dark text-xl pb-4 pt-6">Select a Transporter</p>
         {users.map( user => {
             return <div>
-                <div onClick={() => requestTransporter(user)} className="flex items-center pt-2 bg-onPrimary-light/70 rounded-md my-2 py-2 px-2 cursor-pointer hover:opacity-50">
+                <div onClick={() => {
+                    requestTransporter(user)
+                }} className="flex items-center pt-2 bg-onPrimary-light/70 rounded-md my-2 py-2 px-2 cursor-pointer hover:opacity-50">
                     <img className="w-8 rounded-full" src={user.imageUrl} alt="img" />
                     <p className="pl-2 text-onSecondary-dark">{user.name}</p>
                 </div>
             </div>
         })}
+    </div>
     </div>
     </>
 

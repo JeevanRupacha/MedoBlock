@@ -63,7 +63,21 @@ const TransportRequest = () => {
             _request.medSupplyChainAddr
         )
 
-        const transportReqStr = JSON.stringify({..._request, status: 'ACCEPTED'}).replace(/"|"|{|}/g, '');
+        const cleanReq = {id: _request.id, 
+            initDate: _request.initDate,
+            completeDate: _request.completeDate, 
+            transporterId: _request.transporterId, 
+            fromUserId: _request.fromUserId,
+            toUserId: _request.toUserId,
+            status: 'ACCEPTED',
+            cost: _request.cost,
+            fromLocation: _request.fromLocation,
+            toLocation: _request.toLocation,
+            medSupplyChainAddr: _request.medSupplyChainAddr
+        } as ITransportRequest
+
+
+        const transportReqStr = objectToChainString(cleanReq)
 
         if(getSupplyChainContract == undefined) return alert(" No supply chain ")
         const supplyChainAddress = _request.medSupplyChainAddr 

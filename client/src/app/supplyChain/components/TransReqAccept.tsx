@@ -11,7 +11,7 @@ const TransReqAccept = ({ data} : TransReqAcceptProps) => {
     
     let id, initDate, completedDate, transporterId, rawMatId,medicineId, isMedicine,fromUserId, toUserId, status, cost,fromLocation, toLocation ;
     if(result != undefined && data != undefined){
-        console.log("Result3", result)
+        console.log("Result34", result)
         id = result[0]?.split(":")[1]
         initDate = result[1]?.split(":")[1]
         completedDate = result[2]?.split(":")[1]?.toString()
@@ -22,7 +22,8 @@ const TransReqAccept = ({ data} : TransReqAcceptProps) => {
         fromUserId = result[7]?.split(":")[1]
         toUserId = result[8]?.split(":")[1]
         status = result[9]?.split(":")[1]
-        cost = result[10]?.split(":")[1]
+        cost = result[10]
+        // cost = result[10]?.split(":")[1]
         fromLocation = result[11]?.split(":")[1] + result[11]?.split(":")[2] + result[12]
         toLocation = result[13]?.split(":")[1] + result[13]?.split(":")[2] + result[14]
     }
