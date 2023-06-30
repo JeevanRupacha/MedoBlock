@@ -43,9 +43,11 @@ app.get('/', async (req, res) => {
 })
 
 // Define a route to fetch contract data
-app.get('/suplychain/:address', async (req, res) => {
+app.get('/supplychain/:address', async (req, res) => {
   const { address } = req.params;
   
+  console.log("called ", address)
+
   try {
     // Set the contract address dynamically
     contract.options.address = address;
@@ -72,13 +74,13 @@ app.get('/medicines', async (req, res) => {
       const contract = new web3.eth.Contract(medicinesABI, MEDICINES_ADDRESS);
       const keys = await contract.methods.getMedicinesKeys().call();
       
-      let result = {};
+      let result = [];
       for( key of keys){
         const medicine = await contract.methods.getMedicine(key).call();
         medicine.manuDate = medicine.manuDate.toString();
         medicine.count = medicine.count.toString();
 
-        result = {...result, [key]: {id: medicine.id, name: medicine.name, description: medicine.description, manuId: medicine.manuId, manuDate: medicine.manuDate, expDate: medicine.expDate, fdaStatus: medicine.fdaStatus, price: medicine.price, count: medicine.count, medSupplyChainAddr: medicine.medSupplyChainAddr}};
+        result.push({id: medicine.id, name: medicine.name, description: medicine.description, manuId: medicine.manuId, manuDate: medicine.manuDate, expDate: medicine.expDate, fdaStatus: medicine.fdaStatus, price: medicine.price, count: medicine.count, medSupplyChainAddr: medicine.medSupplyChainAddr});
       }
 
       res.json({ data: result });
@@ -93,7 +95,7 @@ app.get('/allsupplychain', async (req,res) => {
     const contract = new web3.eth.Contract(supplyChainFactoryABI, SUPPLY_CHAIN_FACTORY_ADDRESS);
     const addresses = await contract.methods.getAllAddresses().call()
     
-    let result = {}
+    let result = []
     for( const address of addresses){
       const supplyChainContract = await new web3.eth.Contract(supplyChainABI, address);
       const keys = await supplyChainContract.methods.getSupplyChainKeys().call();
@@ -104,7 +106,7 @@ app.get('/allsupplychain', async (req,res) => {
         chainResult = {...chainResult, [key]: supplyChainData};
       }
 
-      result = {...result, [address]: chainResult};
+      result.push(chainResult);
     }
 
     res.json({ data: result });
@@ -119,12 +121,10 @@ app.get('/allrawmaterials', async (req, res) => {
     const contract = new web3.eth.Contract(rawMaterialABI, RAW_MATERIALS_ADDRESS);
     const keys = await contract.methods.getRawMaterialsKeys().call();
     
-    let result = {};
+    let result = [];
     for( key of keys){
       const rawMat = await contract.methods.getRawMaterial(key).call();
-
-  
-      result = {...result, [key]: {id: rawMat.id, name: rawMat.name, description: rawMat.description, timeStamp: rawMat.timeStamp.toString(), supplierId: rawMat.supplierId, amount: rawMat.amount, price: rawMat.price, unit: rawMat.unit}};
+      result.push({id: rawMat.id, name: rawMat.name, description: rawMat.description, timeStamp: rawMat.timeStamp.toString(), supplierId: rawMat.supplierId, amount: rawMat.amount, price: rawMat.price, unit: rawMat.unit});
     }
 
     res.json({ data: result });
@@ -139,13 +139,13 @@ app.get('/alltransports', async (req, res) => {
     const contract = new web3.eth.Contract(transportRequestABI, TRANSPORT_REQUEST_ADDRESS);
     const keys = await contract.methods.getTransportRequestKeys().call();
     
-    let result = {};
+    let result = [];
     for( key of keys){
       const rawMat = await contract.methods.getTransportRequest(key).call();
 
   
       // result = {...result, [key]: {id: rawMat.id, name: rawMat.name, description: rawMat.description, timeStamp: rawMat.timeStamp.toString(), supplierId: rawMat.supplierId, amount: rawMat.amount, price: rawMat.price, unit: rawMat.unit}};
-      result = {...result, [key]: {id: rawMat.id, initDate: rawMat.initDate, completeDate: rawMat.completeDate, transporterId: rawMat.transporterId, fromUserId: rawMat.fromUserId, toUserId: rawMat.toUserIdm, status: rawMat.status, cost: rawMat.cost, fromLocation: rawMat.fromLocation, toLocation: rawMat.toLocation, medSupplyChainAddr: rawMat.medSupplyChainAddr}};
+      result.push({id: rawMat.id, initDate: rawMat.initDate, completeDate: rawMat.completeDate, transporterId: rawMat.transporterId, fromUserId: rawMat.fromUserId, toUserId: rawMat.toUserIdm, status: rawMat.status, cost: rawMat.cost, fromLocation: rawMat.fromLocation, toLocation: rawMat.toLocation, medSupplyChainAddr: rawMat.medSupplyChainAddr});
     }
 
     res.json({ data: result });

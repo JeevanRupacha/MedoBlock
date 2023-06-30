@@ -1,22 +1,4 @@
-import requests 
-import json
-import csv
-
-from flask import Flask, request
-from flask_restful import Resource, Api
-from flask_jsonpify import jsonify
-from langchain.document_loaders import CSVLoader
-from langchain.indexes import VectorstoreIndexCreator
-from langchain.chains import RetrievalQA
-from langchain.llms import OpenAI
-from langchain.agents import load_tools
-import os
-
-os.environ["OPENAI_API_KEY"] = "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"
-app = Flask(__name__)
-api = Api(app)
-
-jsonData = """[
+[
     {
     "id": "59799507-38c9-4f4a-aa81-9c775bfac14e",
     "name": "Treoe",
@@ -77,51 +59,4 @@ jsonData = """[
     "count": "100",
     "medSupplyChainAddr": "0xCE1004c045fA8b92beC67C12BC79dB87C2698C60"
     }
-    ]"""
-
-def convertJsonDataToCsv():
-        data = json.loads(jsonData)
-        med_csv_file = open('med_csv_file.csv', 'w')
-        csv_writer = csv.writer(med_csv_file)
-
-        count = 0
-
-        for med in data:
-            if count == 0:
-                header = med.keys()
-                csv_writer.writerow(header)
-                count += 1 
-            csv_writer.writerow(med.values())
-        
-        med_csv_file.close()
-
-
-class Chat (Resource):
-    @app.route('/', methods=['GET'])
-    def home():
-        return {'data' : "Home server running..."}
-    
-    @app.route('/chat', methods=['GET'])
-    def queryChat():
-        #medicines = requests.get('https://exuberant-tan-toad.cyclic.app/').content
-        #print(medicines)
-        query_params = request.args
-        
-        convertJsonDataToCsv()
-
-        loader = CSVLoader(file_path='med_csv_file.csv')
-        index_creator = VectorstoreIndexCreator()
-        docsearch = index_creator.from_loaders([loader])
-        chain = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=docsearch.vectorstore.as_retriever(), input_key="question")
-
-        question = query_params['question']    
-        response = chain({"question": question})
-
-        return {'answer': response['result']}  
-
-api.add_resource(Chat)
-
-
-if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=5002)
+    ]
