@@ -24,8 +24,8 @@ const TransReq = ({ data} : TransReq) => {
         toUserId = result[8]?.split(":")[1]
         status = result[9]?.split(":")[1]
         cost = result[10]?.split(":")[1]
-        fromLocation = result[11]?.split(":")[1] + result[11]?.split(":")[2] + result[12]
-        toLocation = result[13]?.split(":")[1] + result[13]?.split(":")[2] + result[14]
+        fromLocation = result[11]?.split(":")[1] 
+        toLocation = result[12]?.split(":")[1]
     }
 
     return(
