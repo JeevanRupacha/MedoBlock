@@ -13,7 +13,7 @@ from langchain.agents import load_tools
 from flask import send_from_directory 
 import os
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "YOUR_API_KEY"
 app = Flask(__name__)
 api = Api(app)
 
